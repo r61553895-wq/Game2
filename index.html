@@ -72,6 +72,21 @@
     text-align: center;
     padding: 0 1rem;
   }
+  .balance-display {
+    position: absolute;
+    top: max(15px, env(safe-area-inset-top));
+    right: 15px;
+    background: rgba(0,0,0,0.5);
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(254,202,87,0.4);
+    color: #feca57;
+    z-index: 5;
+  }
   .btn {
     padding: 1rem 2.5rem;
     font-size: clamp(1rem, 3vw, 1.3rem);
@@ -92,6 +107,11 @@
   .btn.secondary {
     background: linear-gradient(135deg, #48dbfb, #0abde3);
     box-shadow: 0 8px 20px rgba(10,189,227,0.4);
+  }
+  .btn.shop {
+    background: linear-gradient(135deg, #feca57, #ff9f43);
+    box-shadow: 0 8px 20px rgba(255,159,67,0.4);
+    color: #3d2800;
   }
 
   /* LEVEL SELECT */
@@ -130,6 +150,98 @@
   .level-stars { margin-top: 0.3rem; font-size: clamp(1rem, 3vw, 1.5rem); }
   .lock-icon { font-size: 2rem; }
 
+  /* SHOP */
+  #shopScreen {
+    background: radial-gradient(ellipse at center, #3d1b69 0%, #1a1a2e 70%);
+    padding-top: max(70px, calc(env(safe-area-inset-top) + 70px));
+  }
+  #shopScreen h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .shop-subtitle { color: #a0a0c0; margin-bottom: 1.5rem; text-align: center; padding: 0 1rem; }
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    max-width: 900px;
+    width: 100%;
+    padding: 1rem;
+    max-height: 65vh;
+    overflow-y: auto;
+  }
+  .skin-card {
+    aspect-ratio: 1;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 3px solid rgba(255,255,255,0.15);
+    touch-action: manipulation;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.5rem;
+  }
+  .skin-card:active { transform: scale(0.95); }
+  .skin-card.selected {
+    border-color: #26de81;
+    box-shadow: 0 0 25px rgba(38,222,129,0.5);
+    background: linear-gradient(135deg, rgba(38,222,129,0.15), rgba(38,222,129,0.05));
+  }
+  .skin-card.owned:not(.selected) {
+    border-color: rgba(72,219,251,0.5);
+  }
+  .skin-preview {
+    width: 70%;
+    height: 55%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.3rem;
+  }
+  .skin-preview canvas {
+    image-rendering: pixelated;
+    width: 100%;
+    height: 100%;
+  }
+  .skin-name {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    color: white;
+    text-align: center;
+  }
+  .skin-price {
+    font-size: clamp(0.8rem, 2.3vw, 0.95rem);
+    color: #feca57;
+    margin-top: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .skin-status {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.6);
+    padding: 0.2rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  .skin-status.selected { background: #26de81; color: #000; }
+  .skin-status.owned { background: #48dbfb; color: #000; }
+  .skin-status.locked { background: rgba(255,107,107,0.8); }
+
   /* GAME */
   #gameScreen { background: #000; }
   #gameCanvas { display: block; image-rendering: pixelated; }
@@ -143,6 +255,7 @@
     pointer-events: none;
     z-index: 10;
     gap: 6px;
+    flex-wrap: wrap;
   }
   .hud-item {
     background: rgba(0,0,0,0.5);
@@ -199,9 +312,15 @@
     background-clip: text;
     color: transparent;
   }
-  .modal p { font-size: clamp(1rem, 3vw, 1.2rem); margin-bottom: 1.5rem; color: #c0c0d0; }
+  .modal p { font-size: clamp(1rem, 3vw, 1.2rem); margin-bottom: 1rem; color: #c0c0d0; }
   .modal-buttons { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
   .modal-buttons .btn { min-width: 130px; padding: 0.8rem 1.5rem; }
+  .reward-line {
+    font-size: 1.3rem;
+    color: #feca57;
+    margin: 0.5rem 0;
+    font-weight: bold;
+  }
 
   /* CONTROLS HINT (desktop only) */
   .controls-hint {
@@ -255,13 +374,11 @@
   }
   .mobile-group { display: flex; gap: 12px; pointer-events: auto; }
 
-  /* Show mobile controls only on touch devices or small screens */
   @media (max-width: 900px), (pointer: coarse) {
     #mobileControls { display: flex; }
     .controls-hint { display: none; }
   }
 
-  /* Swipe hint overlay */
   #swipeHint {
     position: absolute;
     top: 50%;
@@ -283,6 +400,32 @@
 
   .fade-in { animation: fadeIn 0.5s; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    font-weight: bold;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    border: 2px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  #toast.success { border-color: #26de81; color: #26de81; }
+  #toast.error { border-color: #ff6b6b; color: #ff6b6b; }
+  #toast.info { border-color: #feca57; color: #feca57; }
 </style>
 </head>
 <body>
@@ -290,9 +433,11 @@
 
   <!-- MAIN MENU -->
   <div id="menu" class="screen">
+    <div class="balance-display">💰 <span id="menuBalance">0</span></div>
     <h1 class="title">ПРЫГ-СКОК</h1>
     <p class="subtitle">✨ Приключение по частям ✨</p>
     <button class="btn" onclick="showScreen('levelSelect')">▶ ИГРАТЬ</button>
+    <button class="btn shop" onclick="showScreen('shopScreen')">🛍️ МАГАЗИН</button>
     <button class="btn secondary" onclick="resetProgress()">🔄 Сбросить прогресс</button>
     <p style="margin-top: 2rem; color: #808090; font-size: 0.85rem; text-align: center; padding: 0 1rem; max-width: 500px;">
       📱 На телефоне: кнопки внизу экрана<br>
@@ -302,9 +447,19 @@
 
   <!-- LEVEL SELECT -->
   <div id="levelSelect" class="screen hidden">
+    <div class="balance-display">💰 <span id="levelBalance">0</span></div>
     <h1>Выбери уровень</h1>
     <p style="color: #a0a0c0; margin-bottom: 1.5rem; text-align: center; padding: 0 1rem;">Пройди все 5 частей приключения!</p>
     <div class="levels-grid" id="levelsGrid"></div>
+    <button class="btn secondary" style="margin-top: 1.5rem;" onclick="showScreen('menu')">← Назад</button>
+  </div>
+
+  <!-- SHOP -->
+  <div id="shopScreen" class="screen hidden">
+    <div class="balance-display">💰 <span id="shopBalance">0</span></div>
+    <h1>🛍️ Магазин скинов</h1>
+    <p class="shop-subtitle">Собирай монетки в уровнях и покупай крутые скины!</p>
+    <div class="shop-grid" id="shopGrid"></div>
     <button class="btn secondary" style="margin-top: 1.5rem;" onclick="showScreen('menu')">← Назад</button>
   </div>
 
@@ -330,30 +485,103 @@
 
 </div>
 
+<div id="toast"></div>
+
 <script>
 // ============ STATE ============
 let progress = JSON.parse(localStorage.getItem('jumpGameProgress') || '{}');
 if (!progress.unlocked) progress.unlocked = 1;
 if (!progress.stars) progress.stars = {};
+if (!progress.totalCoins) progress.totalCoins = 0;
+if (!progress.ownedSkins) progress.ownedSkins = ['default'];
+if (!progress.selectedSkin) progress.selectedSkin = 'default';
 
+function saveProgress() {
+  localStorage.setItem('jumpGameProgress', JSON.stringify(progress));
+}
+
+// ============ SKINS ============
+const SKINS = [
+  {
+    id: 'default',
+    name: 'Стандарт',
+    price: 0,
+    colors: { body: '#48dbfb', belly: '#e0f6ff', legs: '#0abde3', eye: 'black' }
+  },
+  {
+    id: 'fire',
+    name: 'Огонёк',
+    price: 5,
+    colors: { body: '#ff6b6b', belly: '#feca57', legs: '#ee5a6f', eye: '#2d0000' }
+  },
+  {
+    id: 'ice',
+    name: 'Ледышка',
+    price: 7,
+    colors: { body: '#a3d8f4', belly: '#ffffff', legs: '#48dbfb', eye: '#003366' }
+  },
+  {
+    id: 'gold',
+    name: 'Золотой',
+    price: 10,
+    colors: { body: '#feca57', belly: '#fff4b0', legs: '#ff9f43', eye: '#5a3a00' }
+  },
+  {
+    id: 'ninja',
+    name: 'Ниндзя',
+    price: 15,
+    colors: { body: '#2d3436', belly: '#636e72', legs: '#000000', eye: '#ff0000' }
+  },
+  {
+    id: 'ghost',
+    name: 'Призрак',
+    price: 20,
+    colors: { body: 'rgba(230,230,255,0.85)', belly: 'rgba(255,255,255,0.9)', legs: 'rgba(200,200,240,0.85)', eye: '#333' }
+  },
+  {
+    id: 'space',
+    name: 'Космос',
+    price: 30,
+    colors: { body: '#8854d0', belly: '#a55eea', legs: '#5f27cd', eye: '#feca57', special: 'stars' }
+  },
+  {
+    id: 'rainbow',
+    name: 'Радуга',
+    price: 50,
+    colors: { body: 'rainbow', belly: '#ffffff', legs: 'rainbow', eye: 'black', special: 'rainbow' }
+  }
+];
+
+function getCurrentSkin() {
+  return SKINS.find(s => s.id === progress.selectedSkin) || SKINS[0];
+}
+
+// ============ CANVAS & SCREENS ============
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const GAME_W = 1200;
 const GAME_H = 600;
 
-// ============ DETECT MOBILE ============
 const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches;
 
-// ============ SCREENS ============
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
   document.getElementById(id).classList.add('fade-in');
   if (id === 'levelSelect') renderLevelSelect();
+  if (id === 'shopScreen') renderShop();
+  if (id === 'menu') updateBalanceDisplays();
   if (id !== 'gameScreen' && game) { game.running = false; }
 }
 
+function updateBalanceDisplays() {
+  document.getElementById('menuBalance').textContent = progress.totalCoins;
+  document.getElementById('levelBalance').textContent = progress.totalCoins;
+  document.getElementById('shopBalance').textContent = progress.totalCoins;
+}
+
 function renderLevelSelect() {
+  updateBalanceDisplays();
   const grid = document.getElementById('levelsGrid');
   grid.innerHTML = '';
   const levels = [
@@ -385,11 +613,141 @@ function renderLevelSelect() {
   });
 }
 
+// ============ SHOP ============
+function renderShop() {
+  updateBalanceDisplays();
+  const grid = document.getElementById('shopGrid');
+  grid.innerHTML = '';
+
+  SKINS.forEach(skin => {
+    const owned = progress.ownedSkins.includes(skin.id);
+    const selected = progress.selectedSkin === skin.id;
+    const canAfford = progress.totalCoins >= skin.price;
+
+    const card = document.createElement('div');
+    card.className = 'skin-card' + (selected ? ' selected' : '') + (owned ? ' owned' : '');
+
+    let statusHTML = '';
+    if (selected) statusHTML = '<div class="skin-status selected">✓ Выбран</div>';
+    else if (owned) statusHTML = '<div class="skin-status owned">Куплен</div>';
+    else if (!canAfford) statusHTML = '<div class="skin-status locked">🔒</div>';
+
+    const priceHTML = owned
+      ? (selected ? '<div class="skin-price" style="color:#26de81">✓ Активен</div>' : '<div class="skin-price" style="color:#48dbfb">Нажми чтобы выбрать</div>')
+      : `<div class="skin-price">💰 ${skin.price}</div>`;
+
+    card.innerHTML = `
+      ${statusHTML}
+      <div class="skin-preview"><canvas width="60" height="80"></canvas></div>
+      <div class="skin-name">${skin.name}</div>
+      ${priceHTML}
+    `;
+
+    // Draw preview
+    const prevCanvas = card.querySelector('canvas');
+    const pctx = prevCanvas.getContext('2d');
+    drawPlayerPreview(pctx, skin, 60, 80);
+
+    card.onclick = () => handleSkinClick(skin);
+    grid.appendChild(card);
+  });
+}
+
+function drawPlayerPreview(pctx, skin, w, h) {
+  pctx.clearRect(0, 0, w, h);
+  const cx = w / 2;
+  const cy = h / 2;
+  const pw = 30;
+  const ph = 40;
+
+  const c = skin.colors;
+  let bodyColor = c.body;
+  let bellyColor = c.belly;
+  let legsColor = c.legs;
+
+  if (c.special === 'rainbow') {
+    const grad = pctx.createLinearGradient(cx - pw/2, cy - ph/2, cx + pw/2, cy + ph/2);
+    grad.addColorStop(0, '#ff6b6b');
+    grad.addColorStop(0.3, '#feca57');
+    grad.addColorStop(0.6, '#48dbfb');
+    grad.addColorStop(1, '#a55eea');
+    bodyColor = grad;
+    legsColor = grad;
+  }
+
+  // Body
+  pctx.fillStyle = bodyColor;
+  pctx.fillRect(cx - pw/2, cy - ph/2, pw, ph);
+  // Belly
+  pctx.fillStyle = bellyColor;
+  pctx.fillRect(cx - pw/2 + 5, cy, pw - 10, ph/2 - 5);
+  // Eye
+  pctx.fillStyle = 'white';
+  pctx.fillRect(cx + 2, cy - ph/2 + 8, 10, 10);
+  pctx.fillStyle = c.eye;
+  pctx.fillRect(cx + 6, cy - ph/2 + 11, 4, 5);
+  // Mouth
+  pctx.fillStyle = '#222';
+  pctx.fillRect(cx + 4, cy - ph/2 + 22, 6, 2);
+  // Legs
+  pctx.fillStyle = legsColor;
+  pctx.fillRect(cx - pw/2 + 3, cy + ph/2 - 5, 8, 5);
+  pctx.fillRect(cx + pw/2 - 11, cy + ph/2 - 5, 8, 5);
+
+  // Stars for space
+  if (c.special === 'stars') {
+    pctx.fillStyle = '#feca57';
+    pctx.fillRect(cx - 8, cy - 5, 2, 2);
+    pctx.fillRect(cx + 5, cy + 3, 2, 2);
+    pctx.fillRect(cx - 3, cy + 8, 2, 2);
+  }
+}
+
+function handleSkinClick(skin) {
+  const owned = progress.ownedSkins.includes(skin.id);
+
+  if (owned) {
+    if (progress.selectedSkin === skin.id) {
+      showToast('Этот скин уже выбран', 'info');
+      return;
+    }
+    progress.selectedSkin = skin.id;
+    saveProgress();
+    renderShop();
+    showToast(`Скин "${skin.name}" выбран!`, 'success');
+    vibrate(30);
+  } else {
+    if (progress.totalCoins >= skin.price) {
+      progress.totalCoins -= skin.price;
+      progress.ownedSkins.push(skin.id);
+      progress.selectedSkin = skin.id;
+      saveProgress();
+      renderShop();
+      showToast(`Куплен скин "${skin.name}"! 🎉`, 'success');
+      vibrate([50, 30, 50]);
+    } else {
+      const need = skin.price - progress.totalCoins;
+      showToast(`Не хватает ${need} 💰`, 'error');
+      vibrate(100);
+    }
+  }
+}
+
+function showToast(msg, type = 'info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.className = ''; }, 2000);
+}
+
 function resetProgress() {
-  if (confirm('Сбросить весь прогресс?')) {
-    progress = { unlocked: 1, stars: {} };
-    localStorage.setItem('jumpGameProgress', JSON.stringify(progress));
+  if (confirm('Сбросить ВЕСЬ прогресс, монеты и скины?')) {
+    progress = { unlocked: 1, stars: {}, totalCoins: 0, ownedSkins: ['default'], selectedSkin: 'default' };
+    saveProgress();
     renderLevelSelect();
+    updateBalanceDisplays();
+    showToast('Прогресс сброшен', 'info');
   }
 }
 
@@ -603,7 +961,6 @@ window.addEventListener('keydown', e => {
 });
 window.addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
 
-// Mobile buttons
 document.querySelectorAll('.mobile-btn').forEach(btn => {
   const k = btn.dataset.key;
   const press = e => { e.preventDefault(); e.stopPropagation(); keys[k] = true; btn.classList.add('active'); };
@@ -616,7 +973,6 @@ document.querySelectorAll('.mobile-btn').forEach(btn => {
   btn.addEventListener('mouseleave', release);
 });
 
-// Swipe controls on canvas
 let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
 let swipeActive = false;
 
@@ -636,14 +992,10 @@ canvas.addEventListener('touchmove', e => {
   const dx = t.clientX - touchStartX;
   const dy = t.clientY - touchStartY;
   const threshold = 30;
-
-  // Horizontal swipe → movement
   if (Math.abs(dx) > threshold && Math.abs(dx) > Math.abs(dy)) {
     if (dx > 0) { keys['right'] = true; keys['left'] = false; }
     else { keys['left'] = true; keys['right'] = false; }
   }
-
-  // Upward swipe → jump
   if (dy < -threshold && Math.abs(dy) > Math.abs(dx)) {
     keys['jump'] = true;
     swipeActive = false;
@@ -654,7 +1006,6 @@ canvas.addEventListener('touchmove', e => {
 canvas.addEventListener('touchend', e => {
   e.preventDefault();
   const elapsed = Date.now() - touchStartTime;
-  // Quick tap on canvas = jump
   if (elapsed < 250 && swipeActive) {
     keys['jump'] = true;
     setTimeout(() => { keys['jump'] = false; }, 150);
@@ -664,7 +1015,6 @@ canvas.addEventListener('touchend', e => {
   swipeActive = false;
 }, { passive: false });
 
-// Prevent zoom/scroll on whole page
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('touchmove', e => {
   if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
@@ -672,7 +1022,6 @@ document.addEventListener('touchmove', e => {
   }
 }, { passive: false });
 
-// Vibration helper
 function vibrate(ms) {
   if (navigator.vibrate) navigator.vibrate(ms);
 }
@@ -808,8 +1157,11 @@ function winLevel() {
   if (game.num < 5 && progress.unlocked <= game.num) {
     progress.unlocked = game.num + 1;
   }
-  localStorage.setItem('jumpGameProgress', JSON.stringify(progress));
-  setTimeout(() => showWinModal(stars), 500);
+  // Add coins to total balance
+  const earned = game.collected;
+  progress.totalCoins += earned;
+  saveProgress();
+  setTimeout(() => showWinModal(stars, earned), 500);
 }
 
 function showDeathModal() {
@@ -830,7 +1182,7 @@ function showDeathModal() {
   modal.querySelector('#backBtn').onclick = () => { modal.remove(); showScreen('levelSelect'); };
 }
 
-function showWinModal(stars) {
+function showWinModal(stars, earned) {
   const modal = document.createElement('div');
   modal.className = 'modal fade-in';
   const isLast = game.num === 5;
@@ -839,6 +1191,7 @@ function showWinModal(stars) {
       <h2>${isLast ? '🏆 ПОБЕДА!' : '✨ Уровень пройден!'}</h2>
       <div style="font-size: clamp(2.5rem, 8vw, 4rem); margin: 1rem 0;">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
       <p>Монет собрано: ${game.collected} / ${game.data.totalCoins}</p>
+      ${earned > 0 ? `<div class="reward-line">+${earned} 💰 добавлено в баланс!</div>` : '<p style="color:#ff6b6b">Монетки не собраны — попробуй ещё раз!</p>'}
       <div class="modal-buttons">
         ${isLast ? '' : `<button class="btn" id="nextBtn">▶ Далее</button>`}
         <button class="btn secondary" id="backBtn">К уровням</button>
@@ -1032,29 +1385,65 @@ function drawFlag(f) {
 
 function drawPlayer() {
   const p = game.player;
+  const skin = getCurrentSkin();
+  const c = skin.colors;
+
   ctx.save();
   ctx.translate(p.x + p.w/2, p.y + p.h/2);
   ctx.scale(p.facing, 1);
 
+  // Shadow
   ctx.fillStyle = 'rgba(0,0,0,0.2)';
   ctx.beginPath();
   ctx.ellipse(0, p.h/2 + 2, p.w/2, 4, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = '#48dbfb';
+  // Determine colors
+  let bodyColor = c.body;
+  let bellyColor = c.belly;
+  let legsColor = c.legs;
+
+  if (c.special === 'rainbow') {
+    const grad = ctx.createLinearGradient(-p.w/2, -p.h/2, p.w/2, p.h/2);
+    const t = (game.time * 0.05) % 1;
+    grad.addColorStop(0, `hsl(${(t * 360)}, 80%, 60%)`);
+    grad.addColorStop(0.33, `hsl(${(t * 360 + 120) % 360}, 80%, 60%)`);
+    grad.addColorStop(0.66, `hsl(${(t * 360 + 240) % 360}, 80%, 60%)`);
+    grad.addColorStop(1, `hsl(${(t * 360 + 360) % 360}, 80%, 60%)`);
+    bodyColor = grad;
+    legsColor = grad;
+  }
+
+  // Body
+  ctx.fillStyle = bodyColor;
   ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-  ctx.fillStyle = '#e0f6ff';
+  // Belly
+  ctx.fillStyle = bellyColor;
   ctx.fillRect(-p.w/2 + 5, 0, p.w - 10, p.h/2 - 5);
+  // Eye
   ctx.fillStyle = 'white';
   ctx.fillRect(2, -p.h/2 + 8, 10, 10);
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = c.eye;
   ctx.fillRect(6, -p.h/2 + 11, 4, 5);
+  // Mouth
   ctx.fillStyle = '#222';
   ctx.fillRect(4, -p.h/2 + 22, 6, 2);
-  ctx.fillStyle = '#0abde3';
+  // Legs
+  ctx.fillStyle = legsColor;
   const legOffset = p.onGround && Math.abs(p.vx) > 0.5 ? Math.sin(p.animTime) * 3 : 0;
   ctx.fillRect(-p.w/2 + 3, p.h/2 - 5, 8, 5 + legOffset);
   ctx.fillRect(p.w/2 - 11, p.h/2 - 5, 8, 5 - legOffset);
+
+  // Special: stars for space skin
+  if (c.special === 'stars') {
+    ctx.fillStyle = '#feca57';
+    const twinkle = Math.sin(game.time * 0.2) * 0.5 + 0.5;
+    ctx.globalAlpha = twinkle;
+    ctx.fillRect(-8, -5, 2, 2);
+    ctx.fillRect(5, 3, 2, 2);
+    ctx.fillRect(-3, 8, 2, 2);
+    ctx.globalAlpha = 1;
+  }
 
   ctx.restore();
 }
@@ -1137,6 +1526,7 @@ window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 200)
 resizeCanvas();
 
 // Init
+updateBalanceDisplays();
 renderLevelSelect();
 </script>
 </body>
