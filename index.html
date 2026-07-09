@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -326,19 +327,79 @@
   .wheel-result.win { color: #26de81; animation: winPulse 0.6s ease-in-out 3; }
   .wheel-result.lose { color: #ff6b6b; }
   @keyframes winPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+  /* XP BAR */
+  .xp-bar-container {
+    position: absolute; top: 60px; left: 15px; right: 15px;
+    background: rgba(0,0,0,0.5); border-radius: 20px; padding: 0.5rem;
+    border: 2px solid rgba(165,94,234,0.4);
+  }
+  .xp-bar {
+    height: 20px; background: linear-gradient(90deg, #a55eea, #8854d0);
+    border-radius: 10px; transition: width 0.3s;
+  }
+  .xp-text {
+    text-align: center; font-size: 0.85rem; margin-top: 0.3rem;
+    color: #a55eea; font-weight: bold;
+  }
+
+  /* STATS */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    margin: 1rem 0;
+  }
+  .stat-card {
+    background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 15px;
+    text-align: center;
+  }
+  .stat-value { font-size: 1.5rem; font-weight: bold; color: #feca57; }
+  .stat-label { font-size: 0.85rem; color: #a0a0c0; margin-top: 0.3rem; }
+
+  /* CUSTOMIZATION */
+  .custom-section {
+    margin: 1rem 0; padding: 1rem;
+    background: rgba(0,0,0,0.2); border-radius: 15px;
+  }
+  .custom-title {
+    font-size: 1rem; font-weight: bold; margin-bottom: 0.8rem;
+    color: #feca57;
+  }
+  .color-picker {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .color-option {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 3px solid transparent; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .color-option.selected { border-color: #fff; transform: scale(1.1); }
+  .accessory-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;
+  }
+  .accessory-btn {
+    padding: 0.5rem; background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2); border-radius: 10px;
+    cursor: pointer; font-size: 1.5rem;
+  }
+  .accessory-btn.selected { border-color: #26de81; background: rgba(38,222,129,0.2); }
 </style>
 </head>
 <body>
 <div id="app">
 
   <div id="menu" class="screen">
-    <div class="stats-display" id="statsDisplay"> <span id="onlineCount">—</span> онлайн | 👁️ <span id="visitorCount">—</span> всего</div>
-    <div class="balance-display">💰 <span id="menuBalance">0</span></div>
+    <div class="stats-display">⭐ Уровень <span id="menuLevel">1</span> | 💰 <span id="menuBalance">0</span></div>
+    <div class="xp-bar-container">
+      <div class="xp-bar" id="menuXPBar" style="width: 0%"></div>
+      <div class="xp-text"><span id="menuXP">0</span> / <span id="menuXPNeed">100</span> XP</div>
+    </div>
     <h1 class="title">ПРЫГ-СКОК</h1>
     <p class="subtitle">✨ Большое приключение ✨</p>
     <button class="btn" onclick="showScreen('levelSelect')">▶ ИГРАТЬ</button>
     <button class="btn wheel" onclick="openWheel()"> КОЛЕСО ФОРТУНЫ</button>
     <button class="btn shop" onclick="showScreen('shopScreen')">🛍️ МАГАЗИН</button>
+    <button class="btn secondary" onclick="openStats()">📊 СТАТИСТИКА</button>
+    <button class="btn secondary" onclick="openCustomization()">🎨 КАСТОМ</button>
     <button class="btn secondary" onclick="resetProgress()">🔄 Сбросить прогресс</button>
   </div>
 
@@ -351,13 +412,13 @@
   </div>
 
   <div id="shopScreen" class="screen hidden">
-    <div class="balance-display">💰 <span id="shopBalance">0</span></div>
+    <div class="balance-display"> <span id="shopBalance">0</span></div>
     <h1>🛍️ Магазин</h1>
     <p class="shop-subtitle">Собирай монетки и покупай крутые скины, фоны и способности!</p>
     <div class="shop-tabs">
       <button class="shop-tab active" data-tab="skins" onclick="switchShopTab('skins')">🎭 Скины</button>
-      <button class="shop-tab" data-tab="bgs" onclick="switchShopTab('bgs')"> Фоны</button>
-      <button class="shop-tab" data-tab="abilities" onclick="switchShopTab('abilities')">⚡ Способности</button>
+      <button class="shop-tab" data-tab="bgs" onclick="switchShopTab('bgs')">🌄 Фоны</button>
+      <button class="shop-tab" data-tab="abilities" onclick="switchShopTab('abilities')"> Способности</button>
     </div>
     <div class="shop-grid" id="shopGrid"></div>
     <button class="btn secondary" style="margin-top: 1rem;" onclick="showScreen('menu')">← Назад</button>
@@ -392,12 +453,11 @@
 
 <div id="toast"></div>
 
-<!-- FIREBASE MODULE - СЧИТАЕТ ОНЛАЙН -->
+<!-- FIREBASE MODULE -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { getDatabase, ref, set, onValue, onDisconnect, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-// ⚠️ НОВЫЙ FIREBASE КОНФИГ
 const firebaseConfig = {
   apiKey: "AIzaSyB8bnt0qt-WNXy370uXfPHovtanLWtijkQ",
   authDomain: "jump-jump-76abe.firebaseapp.com",
@@ -476,12 +536,43 @@ if (!progress.selectedSkin) progress.selectedSkin = 'default';
 if (!progress.ownedBgs) progress.ownedBgs = ['default'];
 if (!progress.selectedBg) progress.selectedBg = 'default';
 if (!progress.ownedAbilities) progress.ownedAbilities = [];
+if (!progress.playerLevel) progress.playerLevel = 1;
+if (!progress.playerXP) progress.playerXP = 0;
+if (!progress.playerXPNeed) progress.playerXPNeed = 100;
+if (!progress.stats) progress.stats = {
+  timePlayed: 0, levelsCompleted: 0, enemiesDefeated: 0,
+  coinsCollected: 0, deaths: 0, bestTime: 0, jumps: 0
+};
+if (!progress.customization) progress.customization = {
+  eyeColor: '#000000', accessory: 'none', effect: 'none'
+};
 
 function saveProgress() { localStorage.setItem('jumpGameProgress', JSON.stringify(progress)); }
 
 function updateCounters() {
   const onlineEl = document.getElementById('onlineCount');
   if (onlineEl && onlineEl.textContent === '—') onlineEl.textContent = '1';
+}
+
+function addXP(amount) {
+  progress.playerXP += amount;
+  while (progress.playerXP >= progress.playerXPNeed) {
+    progress.playerXP -= progress.playerXPNeed;
+    progress.playerLevel++;
+    progress.playerXPNeed = Math.floor(progress.playerXPNeed * 1.5);
+    showToast(`🎉 Уровень ${progress.playerLevel}!`, 'success');
+  }
+  updateUI();
+}
+
+function updateUI() {
+  document.getElementById('menuLevel').textContent = progress.playerLevel;
+  document.getElementById('menuXP').textContent = progress.playerXP;
+  document.getElementById('menuXPNeed').textContent = progress.playerXPNeed;
+  document.getElementById('menuXPBar').style.width = `${(progress.playerXP / progress.playerXPNeed) * 100}%`;
+  document.getElementById('menuBalance').textContent = progress.totalCoins;
+  document.getElementById('levelBalance').textContent = progress.totalCoins;
+  document.getElementById('shopBalance').textContent = progress.totalCoins;
 }
 
 const SKINS = [
@@ -534,11 +625,11 @@ function getCurrentBg() { return BACKGROUNDS.find(b => b.id === progress.selecte
 
 const ABILITIES = {
   dash: { id: 'dash', name: 'Рывок', icon: '⚡', key: 'E', color: '#feca57', price: 20, desc: 'Мощный рывок вперёд', cooldown: 180, duration: 12, dashSpeed: 22 },
-  shield: { id: 'shield', name: 'Щит', icon: '🛡️', key: 'Q', color: '#48dbfb', price: 35, desc: 'Защита от одного удара', cooldown: 900, duration: 600 },
-  magnet: { id: 'magnet', name: 'Магнит', icon: '', key: 'F', color: '#ff6b6b', price: 30, desc: 'Притягивает монеты', cooldown: 600, duration: 300, radius: 180 },
+  shield: { id: 'shield', name: 'Щит', icon: '️', key: 'Q', color: '#48dbfb', price: 35, desc: 'Защита от одного удара', cooldown: 900, duration: 600 },
+  magnet: { id: 'magnet', name: 'Магнит', icon: '🧲', key: 'F', color: '#ff6b6b', price: 30, desc: 'Притягивает монеты', cooldown: 600, duration: 300, radius: 180 },
   doubleJump: { id: 'doubleJump', name: 'Двойной прыжок', icon: '🦘', key: 'Shift', color: '#26de81', price: 25, desc: 'Прыжок в воздухе', cooldown: 0, passive: true },
-  slowMo: { id: 'slowMo', name: 'Замедление', icon: '⏳', key: 'Z', color: '#a55eea', price: 40, desc: 'Замедляет время на 5 сек', cooldown: 600, duration: 300 },
-  teleport: { id: 'teleport', name: 'Телепорт', icon: '', key: 'X', color: '#ff9ff3', price: 45, desc: 'Мгновенный прыжок вперёд', cooldown: 480, duration: 1, teleportDist: 200 },
+  slowMo: { id: 'slowMo', name: 'Замедление', icon: '', key: 'Z', color: '#a55eea', price: 40, desc: 'Замедляет время на 5 сек', cooldown: 600, duration: 300 },
+  teleport: { id: 'teleport', name: 'Телепорт', icon: '🌀', key: 'X', color: '#ff9ff3', price: 45, desc: 'Мгновенный прыжок вперёд', cooldown: 480, duration: 1, teleportDist: 200 },
   invisibility: { id: 'invisibility', name: 'Невидимость', icon: '👻', key: 'C', color: '#dfe6e9', price: 50, desc: 'Враги не видят тебя 4 сек', cooldown: 720, duration: 240 }
 };
 
@@ -557,15 +648,9 @@ function showScreen(id) {
   document.getElementById(id).classList.add('fade-in');
   if (id === 'levelSelect') renderLevelSelect();
   if (id === 'shopScreen') renderShop();
-  if (id === 'menu') { updateBalanceDisplays(); updateCounters(); }
+  if (id === 'menu') { updateUI(); updateCounters(); }
   if (id !== 'gameScreen' && game) { game.running = false; }
   window.scrollTo(0, 0);
-}
-
-function updateBalanceDisplays() {
-  document.getElementById('menuBalance').textContent = progress.totalCoins;
-  document.getElementById('levelBalance').textContent = progress.totalCoins;
-  document.getElementById('shopBalance').textContent = progress.totalCoins;
 }
 
 function makeLevels() {
@@ -709,7 +794,7 @@ function startLevel(num) {
     spikes: data.spikes, platforms: data.platforms, flag: data.flag,
     particles: [], camera: { shake: 0 },
     lives: 3, collected: 0, running: true, paused: false, won: false, dead: false, time: 0,
-    abilities: initAbilities(), slowMoFactor: 1
+    abilities: initAbilities(), slowMoFactor: 1, startTime: Date.now()
   };
   document.getElementById('levelNum').textContent = num;
   updateHUD();
@@ -853,7 +938,7 @@ function activateAbility(id) {
     if (game.player.x < 0) game.player.x = 0;
     if (game.player.x + game.player.w > GAME_W) game.player.x = GAME_W - game.player.w;
     spawnParticles(game.player.x + 15, game.player.y + 20, 20, cfg.color);
-    spawnAbilityNotice('🌀 ТЕЛЕПОРТ!', cfg.color);
+    spawnAbilityNotice(' ТЕЛЕПОРТ!', cfg.color);
     vibrate(40);
   } else if (id === 'invisibility') {
     ab.active = cfg.duration;
@@ -920,6 +1005,7 @@ function doJump() {
     p.onGround = false;
     game.abilities.doubleJumpUsed = false;
     spawnParticles(p.x + p.w/2, p.y + p.h, 5, '#ffffff');
+    progress.stats.jumps++;
     return;
   }
   
@@ -929,6 +1015,7 @@ function doJump() {
     spawnParticles(p.x + p.w/2, p.y + p.h, 10, '#26de81');
     spawnAbilityNotice('🦘 ДВОЙНОЙ!', '#26de81');
     vibrate(25);
+    progress.stats.jumps++;
   }
 }
 
@@ -1073,6 +1160,8 @@ function checkCollections() {
       if (rectOverlap(p, cr)) {
         c.collected = true;
         game.collected++;
+        progress.stats.coinsCollected++;
+        addXP(5);
         spawnParticles(c.x, c.y, 10, '#feca57');
         updateHUD();
       }
@@ -1084,6 +1173,8 @@ function checkCollections() {
     if (rectOverlap(p, er)) {
       if (p.vy > 0 && p.y + p.h - e.y < 20) {
         e.dead = true; p.vy = -9;
+        progress.stats.enemiesDefeated++;
+        addXP(20);
         spawnParticles(e.x + e.w/2, e.y + e.h/2, 15, '#ff6b6b');
         vibrate(50);
       } else { hurtPlayer(); }
@@ -1111,6 +1202,7 @@ function hurtPlayer() {
     return;
   }
   game.lives--;
+  progress.stats.deaths++;
   game.camera.shake = 15;
   spawnParticles(game.player.x + 15, game.player.y + 20, 20, '#ff6b6b');
   vibrate([50, 50, 100]);
@@ -1130,8 +1222,16 @@ function winLevel() {
   progress.stars[game.num] = Math.max(progress.stars[game.num] || 0, stars);
   if (game.num < 17 && progress.unlocked <= game.num) progress.unlocked = game.num + 1;
   progress.totalCoins += game.collected;
+  progress.stats.levelsCompleted++;
+  
+  const timeTaken = (Date.now() - game.startTime) / 1000;
+  if (timeTaken < progress.stats.bestTime || progress.stats.bestTime === 0) {
+    progress.stats.bestTime = timeTaken;
+  }
+  
+  addXP(100);
   saveProgress();
-  setTimeout(() => showWinModal(stars, game.collected), 500);
+  setTimeout(() => showWinModal(stars, game.collected, timeTaken), 500);
 }
 
 function showDeathModal() {
@@ -1157,23 +1257,24 @@ function showDeathModal() {
       game.dead = false; game.lives = 1;
       game.player.x = game.data.spawn.x; game.player.y = game.data.spawn.y;
       game.player.vx = 0; game.player.vy = 0;
-      updateHUD(); updateBalanceDisplays();
+      updateHUD(); updateUI();
       showToast('Продолжаем! -5💰', 'success');
     }
   };
   modal.querySelector('#backBtn').onclick = () => { modal.remove(); showScreen('levelSelect'); };
 }
 
-function showWinModal(stars, earned) {
+function showWinModal(stars, earned, timeTaken) {
   const modal = document.createElement('div');
   modal.className = 'modal fade-in';
   const isLast = game.num === 17;
   modal.innerHTML = `
     <div class="modal-content">
-      <h2>${isLast ? '🏆 ПОБЕДА!' : '✨ Уровень пройден!'}</h2>
+      <h2>${isLast ? ' ПОБЕДА!' : '✨ Уровень пройден!'}</h2>
       <div style="font-size: clamp(2.5rem, 8vw, 4rem); margin: 1rem 0;">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
       <p>Монет собрано: ${game.collected} / ${game.data.totalCoins}</p>
-      ${earned > 0 ? `<div class="reward-line">+${earned} 💰 добавлено!</div>` : ''}
+      <p>Время: ${timeTaken.toFixed(1)} сек</p>
+      ${earned > 0 ? `<div class="reward-line">+${earned} 💰 добавлено!</div>` : '<p style="color:#ff6b6b">Монетки не собраны — попробуй ещё раз!</p>'}
       <div class="modal-buttons">
         ${isLast ? '' : `<button class="btn" id="nextBtn">▶ Далее</button>`}
         <button class="btn secondary" id="backBtn">К уровням</button>
@@ -1462,12 +1563,34 @@ function drawPlayer() {
 
   ctx.fillStyle = bodyColor; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
   ctx.fillStyle = c.belly; ctx.fillRect(-p.w/2 + 5, 0, p.w - 10, p.h/2 - 5);
-  ctx.fillStyle = 'white'; ctx.fillRect(2, -p.h/2 + 8, 10, 10);
-  ctx.fillStyle = c.eye; ctx.fillRect(6, -p.h/2 + 11, 4, 5);
+  ctx.fillStyle = progress.customization.eyeColor; ctx.fillRect(2, -p.h/2 + 8, 10, 10);
+  ctx.fillStyle = '#000'; ctx.fillRect(6, -p.h/2 + 11, 4, 5);
   ctx.fillStyle = legsColor;
   const legOffset = p.onGround && Math.abs(p.vx) > 0.5 ? Math.sin(p.animTime) * 3 : 0;
   ctx.fillRect(-p.w/2 + 3, p.h/2 - 5, 8, 5 + legOffset);
   ctx.fillRect(p.w/2 - 11, p.h/2 - 5, 8, 5 - legOffset);
+
+  // Аксессуары
+  if (progress.customization.accessory === 'glasses') {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(-5, -p.h/2 + 10, 15, 5);
+  } else if (progress.customization.accessory === 'hat') {
+    ctx.fillStyle = '#ff6b6b';
+    ctx.fillRect(-p.w/2, -p.h/2 - 8, p.w, 8);
+  }
+
+  // Эффекты
+  if (progress.customization.effect === 'fire') {
+    ctx.fillStyle = 'rgba(255,100,0,0.6)';
+    ctx.beginPath();
+    ctx.arc(0, p.h/2 + 10, 8, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (progress.customization.effect === 'sparkle') {
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    for (let i = 0; i < 3; i++) {
+      ctx.fillRect(-15 + i * 10, -p.h/2 - 10 + i * 5, 3, 3);
+    }
+  }
 
   ctx.restore();
   ctx.globalAlpha = 1;
@@ -1535,7 +1658,7 @@ window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 200)
 resizeCanvas();
 
 function renderLevelSelect() {
-  updateBalanceDisplays();
+  updateUI();
   const grid = document.getElementById('levelsGrid');
   grid.innerHTML = '';
   const levels = [
@@ -1589,7 +1712,7 @@ function renderLevelSelect() {
       card.innerHTML += `<div class="level-num">${num}</div><div class="level-name">${lv.name}</div><div class="level-stars">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>`;
       card.onclick = () => startLevel(num);
     } else {
-      card.innerHTML = `<div class="lock-icon"></div><div class="level-name">${lv.name}</div>`;
+      card.innerHTML = `<div class="lock-icon">🔒</div><div class="level-name">${lv.name}</div>`;
     }
     grid.appendChild(card);
   });
@@ -1602,7 +1725,7 @@ function switchShopTab(tab) {
 }
 
 function renderShop() {
-  updateBalanceDisplays();
+  updateUI();
   const grid = document.getElementById('shopGrid');
   grid.innerHTML = '';
 
@@ -1618,7 +1741,7 @@ function renderShop() {
       let statusHTML = '';
       if (selected) statusHTML = '<div class="skin-status selected">✓ Выбран</div>';
       else if (owned) statusHTML = '<div class="skin-status owned">Куплен</div>';
-      else if (!canAfford) statusHTML = '<div class="skin-status locked">🔒</div>';
+      else if (!canAfford) statusHTML = '<div class="skin-status locked"></div>';
 
       const priceHTML = owned
         ? (selected ? '<div class="skin-price" style="color:#26de81">✓ Активен</div>' : '<div class="skin-price" style="color:#48dbfb">Нажми чтобы выбрать</div>')
@@ -1710,8 +1833,8 @@ function drawPlayerPreview(pctx, skin, w, h) {
 
   pctx.fillStyle = bodyColor; pctx.fillRect(cx - pw/2, cy - ph/2, pw, ph);
   pctx.fillStyle = c.belly; pctx.fillRect(cx - pw/2 + 5, cy, pw - 10, ph/2 - 5);
-  pctx.fillStyle = 'white'; pctx.fillRect(cx + 2, cy - ph/2 + 8, 10, 10);
-  pctx.fillStyle = c.eye; pctx.fillRect(cx + 6, cy - ph/2 + 11, 4, 5);
+  pctx.fillStyle = c.eye; pctx.fillRect(cx + 2, cy - ph/2 + 8, 10, 10);
+  pctx.fillStyle = '#000'; pctx.fillRect(cx + 6, cy - ph/2 + 11, 4, 5);
   pctx.fillStyle = c.legs === 'rainbow' ? '#0abde3' : c.legs;
   pctx.fillRect(cx - pw/2 + 3, cy + ph/2 - 5, 8, 5);
   pctx.fillRect(cx + pw/2 - 11, cy + ph/2 - 5, 8, 5);
@@ -1784,11 +1907,124 @@ function resetProgress() {
       unlocked: 1, stars: {}, totalCoins: 0,
       ownedSkins: ['default'], selectedSkin: 'default',
       ownedBgs: ['default'], selectedBg: 'default',
-      ownedAbilities: []
+      ownedAbilities: [],
+      playerLevel: 1, playerXP: 0, playerXPNeed: 100,
+      stats: { timePlayed: 0, levelsCompleted: 0, enemiesDefeated: 0, coinsCollected: 0, deaths: 0, bestTime: 0, jumps: 0 },
+      customization: { eyeColor: '#000000', accessory: 'none', effect: 'none' }
     };
-    saveProgress(); renderLevelSelect(); updateBalanceDisplays();
+    saveProgress(); renderLevelSelect(); updateUI();
     showToast('Прогресс сброшен', 'info');
   }
+}
+
+function openStats() {
+  const modal = document.createElement('div');
+  modal.className = 'modal fade-in';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h2>📊 Статистика</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">${progress.playerLevel}</div>
+          <div class="stat-label">Уровень игрока</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${progress.stats.levelsCompleted}</div>
+          <div class="stat-label">Пройдено уровней</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${progress.stats.coinsCollected}</div>
+          <div class="stat-label">Собрано монет</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${progress.stats.enemiesDefeated}</div>
+          <div class="stat-label">Убито врагов</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${progress.stats.deaths}</div>
+          <div class="stat-label">Смертей</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${progress.stats.jumps}</div>
+          <div class="stat-label">Прыжков</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${progress.stats.bestTime.toFixed(1)}с</div>
+          <div class="stat-label">Лучшее время</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${progress.totalCoins}</div>
+          <div class="stat-label">Монет сейчас</div>
+        </div>
+      </div>
+      <button class="btn secondary" onclick="this.closest('.modal').remove()">Закрыть</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function openCustomization() {
+  const modal = document.createElement('div');
+  modal.className = 'modal fade-in';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h2>🎨 Кастомизация</h2>
+      
+      <div class="custom-section">
+        <div class="custom-title">👁️ Цвет глаз</div>
+        <div class="color-picker">
+          <div class="color-option ${progress.customization.eyeColor === '#000000' ? 'selected' : ''}" style="background: #000000" onclick="setEyeColor('#000000')"></div>
+          <div class="color-option ${progress.customization.eyeColor === '#ff0000' ? 'selected' : ''}" style="background: #ff0000" onclick="setEyeColor('#ff0000')"></div>
+          <div class="color-option ${progress.customization.eyeColor === '#00ff00' ? 'selected' : ''}" style="background: #00ff00" onclick="setEyeColor('#00ff00')"></div>
+          <div class="color-option ${progress.customization.eyeColor === '#0000ff' ? 'selected' : ''}" style="background: #0000ff" onclick="setEyeColor('#0000ff')"></div>
+          <div class="color-option ${progress.customization.eyeColor === '#ffff00' ? 'selected' : ''}" style="background: #ffff00" onclick="setEyeColor('#ffff00')"></div>
+          <div class="color-option ${progress.customization.eyeColor === '#ff00ff' ? 'selected' : ''}" style="background: #ff00ff" onclick="setEyeColor('#ff00ff')"></div>
+        </div>
+      </div>
+
+      <div class="custom-section">
+        <div class="custom-title"> Аксессуар</div>
+        <div class="accessory-grid">
+          <div class="accessory-btn ${progress.customization.accessory === 'none' ? 'selected' : ''}" onclick="setAccessory('none')">❌</div>
+          <div class="accessory-btn ${progress.customization.accessory === 'glasses' ? 'selected' : ''}" onclick="setAccessory('glasses')">👓</div>
+          <div class="accessory-btn ${progress.customization.accessory === 'hat' ? 'selected' : ''}" onclick="setAccessory('hat')">🎩</div>
+        </div>
+      </div>
+
+      <div class="custom-section">
+        <div class="custom-title">✨ Эффект</div>
+        <div class="accessory-grid">
+          <div class="accessory-btn ${progress.customization.effect === 'none' ? 'selected' : ''}" onclick="setEffect('none')">❌</div>
+          <div class="accessory-btn ${progress.customization.effect === 'fire' ? 'selected' : ''}" onclick="setEffect('fire')">🔥</div>
+          <div class="accessory-btn ${progress.customization.effect === 'sparkle' ? 'selected' : ''}" onclick="setEffect('sparkle')">✨</div>
+        </div>
+      </div>
+
+      <button class="btn secondary" onclick="this.closest('.modal').remove()">Закрыть</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function setEyeColor(color) {
+  progress.customization.eyeColor = color;
+  saveProgress();
+  openCustomization();
+  showToast('Цвет глаз изменён!', 'success');
+}
+
+function setAccessory(acc) {
+  progress.customization.accessory = acc;
+  saveProgress();
+  openCustomization();
+  showToast('Аксессуар изменён!', 'success');
+}
+
+function setEffect(effect) {
+  progress.customization.effect = effect;
+  saveProgress();
+  openCustomization();
+  showToast('Эффект изменён!', 'success');
 }
 
 const WHEEL_SEGMENTS = [
@@ -1827,7 +2063,7 @@ function openWheel() {
   modal.id = 'wheelModal';
   modal.innerHTML = `
     <div class="wheel-container">
-      <h2> Колесо Фортуны</h2>
+      <h2>🎡 Колесо Фортуны</h2>
       <div class="wheel-price">Стоимость: 50 💰</div>
       <div class="wheel-wrapper">
         <div class="wheel-pointer"></div>
@@ -1911,7 +2147,7 @@ function spinWheel() {
   wheelSpinning = true;
   progress.totalCoins -= 50;
   saveProgress();
-  updateBalanceDisplays();
+  updateUI();
 
   const spinBtn = document.getElementById('spinBtn');
   spinBtn.disabled = true;
@@ -1940,7 +2176,7 @@ function spinWheel() {
     if (prize.type === 'coins') {
       progress.totalCoins += prize.value;
       saveProgress();
-      updateBalanceDisplays();
+      updateUI();
       resultEl.textContent = `🎉 Выигрыш: ${prize.label}!`;
       resultEl.className = 'wheel-result win';
       showToast(`Выиграно ${prize.value} монет!`, 'success');
@@ -1952,14 +2188,14 @@ function spinWheel() {
         progress.ownedSkins.push(won.id);
         progress.selectedSkin = won.id;
         saveProgress();
-        resultEl.textContent = `🎭 Скин "${won.name}"!`;
+        resultEl.textContent = ` Скин "${won.name}"!`;
         resultEl.className = 'wheel-result win';
         showToast(`Выигран скин "${won.name}"!`, 'success');
         vibrate([100, 50, 100, 50, 200]);
       } else {
         progress.totalCoins += 100;
         saveProgress();
-        updateBalanceDisplays();
+        updateUI();
         resultEl.textContent = 'Все скины есть! +100💰';
         resultEl.className = 'wheel-result win';
       }
@@ -1973,9 +2209,10 @@ function spinWheel() {
 }
 
 // Init
-updateBalanceDisplays();
+updateUI();
 updateCounters();
 renderLevelSelect();
 </script>
 </body>
 </html>
+```
