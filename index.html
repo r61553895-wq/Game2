@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -327,66 +326,6 @@
   .wheel-result.win { color: #26de81; animation: winPulse 0.6s ease-in-out 3; }
   .wheel-result.lose { color: #ff6b6b; }
   @keyframes winPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-
-  /* Инструкция по настройке */
-  .setup-instruction {
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    padding: 2rem;
-    margin: 2rem auto;
-    max-width: 800px;
-    border-radius: 20px;
-    border: 3px solid #feca57;
-    color: white;
-  }
-  .setup-instruction h2 {
-    color: #feca57;
-    margin-bottom: 1rem;
-    font-size: 1.8rem;
-  }
-  .setup-instruction h3 {
-    color: #48dbfb;
-    margin: 1rem 0 0.5rem;
-    font-size: 1.3rem;
-  }
-  .setup-instruction ol, .setup-instruction ul {
-    margin-left: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  .setup-instruction li {
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
-  }
-  .setup-instruction code {
-    background: rgba(0,0,0,0.5);
-    padding: 0.2rem 0.5rem;
-    border-radius: 5px;
-    font-family: monospace;
-    color: #feca57;
-  }
-  .setup-instruction .code-block {
-    background: rgba(0,0,0,0.7);
-    padding: 1rem;
-    border-radius: 10px;
-    margin: 1rem 0;
-    overflow-x: auto;
-    font-family: monospace;
-    white-space: pre-wrap;
-    border: 2px solid #48dbfb;
-  }
-  .setup-instruction .warning {
-    background: rgba(255,107,107,0.2);
-    border-left: 4px solid #ff6b6b;
-    padding: 0.8rem;
-    margin: 1rem 0;
-    border-radius: 5px;
-  }
-  .setup-instruction .success {
-    background: rgba(38,222,129,0.2);
-    border-left: 4px solid #26de81;
-    padding: 0.8rem;
-    margin: 1rem 0;
-    border-radius: 5px;
-  }
 </style>
 </head>
 <body>
@@ -458,7 +397,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { getDatabase, ref, set, onValue, onDisconnect, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-// ⚠️ ВАЖНО: добавлен databaseURL (его не было в твоём конфиге, но он нужен для Realtime Database)
+// ⚠️ НОВЫЙ FIREBASE КОНФИГ
 const firebaseConfig = {
   apiKey: "AIzaSyB8bnt0qt-WNXy370uXfPHovtanLWtijkQ",
   authDomain: "jump-jump-76abe.firebaseapp.com",
@@ -1711,7 +1650,7 @@ function renderShop() {
       let statusHTML = '';
       if (selected) statusHTML = '<div class="bg-status selected">✓ Выбран</div>';
       else if (owned) statusHTML = '<div class="bg-status owned">Куплен</div>';
-      else if (!canAfford) statusHTML = '<div class="bg-status locked"></div>';
+      else if (!canAfford) statusHTML = '<div class="bg-status locked">🔒</div>';
 
       const priceHTML = owned
         ? (selected ? '<div class="bg-price" style="color:#26de81">✓ Активен</div>' : '<div class="bg-price" style="color:#48dbfb">Нажми чтобы выбрать</div>')
@@ -1746,7 +1685,7 @@ function renderShop() {
 
       const priceHTML = owned
         ? '<div class="ability-price" style="color:#26de81">✓ Активна</div>'
-        : `<div class="ability-price"> ${cfg.price}</div>`;
+        : `<div class="ability-price">💰 ${cfg.price}</div>`;
 
       card.innerHTML = `
         ${statusHTML}
@@ -2038,83 +1977,5 @@ updateBalanceDisplays();
 updateCounters();
 renderLevelSelect();
 </script>
-
-<!-- ИНСТРУКЦИЯ ПО НАСТРОЙКЕ FIREBASE -->
-<div class="setup-instruction">
-  <h2>🔥 Инструкция по настройке Firebase</h2>
-  
-  <h3>⚠️ Шаг 1: Создай Realtime Database</h3>
-  <ol>
-    <li>Зайди в <a href="https://console.firebase.google.com/project/jump-jump-76abe" target="_blank" style="color:#feca57;">Firebase Console</a></li>
-    <li>В меню слева нажми <strong>"Realtime Database"</strong></li>
-    <li>Нажми <strong>"Create Database"</strong> (Создать базу данных)</li>
-    <li>Выбери локацию (любую, например United States)</li>
-    <li>Выбери <strong>"Start in test mode"</strong> (Начать в тестовом режиме)</li>
-    <li>Нажми <strong>"Enable"</strong></li>
-  </ol>
-
-  <div class="warning">
-    <strong>️ ВАЖНО:</strong> Если ты уже создал базу данных, но онлайн не работает — проверь правила (Rules) ниже!
-  </div>
-
-  <h3>📋 Шаг 2: Настрой правила (Rules)</h3>
-  <p>В Firebase Console → Realtime Database → вкладка <strong>"Rules"</strong> вставь этот код:</p>
-  
-  <div class="code-block">{
-  "rules": {
-    ".read": true,
-    ".write": true
-  }
-}</div>
-
-  <p>Нажми кнопку <strong>"Publish"</strong> (Опубликовать) справа сверху.</p>
-
-  <div class="success">
-    <strong>✅ Готово!</strong> Теперь онлайн счётчик будет работать. Открой игру в новой вкладке — увидишь "1 онлайн". Открой ещё одну вкладку — увидишь "2 онлайн".
-  </div>
-
-  <h3>🔍 Как проверить что всё работает:</h3>
-  <ol>
-    <li>Открой игру в браузере</li>
-    <li>В левом верхнем углу увидишь: <code>👥 1 онлайн | 👁️ 1 всего</code></li>
-    <li>Открой игру в другой вкладке или на телефоне</li>
-    <li>Увидишь: <code>👥 2 онлайн | 👁️ 2 всего</code></li>
-    <li>Закрой одну вкладку — через 5 минут счётчик уменьшится</li>
-  </ol>
-
-  <h3>🛡️ Шаг 3 (опционально): Безопасные правила</h3>
-  <p>Когда всё работает, можешь сделать правила более безопасными:</p>
-  
-  <div class="code-block">{
-  "rules": {
-    "status": {
-      "$uid": {
-        ".read": true,
-        ".write": "$uid === auth.uid || !data.exists()"
-      }
-    },
-    "stats": {
-      ".read": true,
-      "totalVisitors": {
-        ".write": true
-      }
-    }
-  }
-}</div>
-
-  <h3>❓ Если не работает:</h3>
-  <ul>
-    <li>Проверь что <code>databaseURL</code> правильный: <code>https://jump-jump-76abe-default-rtdb.firebaseio.com</code></li>
-    <li>Открой консоль браузера (F12) — там будет ошибка если что-то не так</li>
-    <li>Убедись что Realtime Database создан (не Firestore!)</li>
-    <li>Проверь что правила опубликованы</li>
-  </ul>
-
-  <div class="success">
-    <strong> Приятной игры!</strong> Теперь ты видишь реальных игроков онлайн!
-  </div>
-</div>
-
 </body>
 </html>
-```
