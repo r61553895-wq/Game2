@@ -57,20 +57,19 @@
     box-shadow: 0 8px 20px rgba(238,90,111,0.4); transition: transform 0.15s;
     margin: 0.4rem; min-width: 180px; touch-action: manipulation;
   }
-  .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(238,90,111,0.6); }
+  .btn:hover { transform: translateY(-3px); }
   .btn:active { transform: translateY(0) scale(0.97); }
-  .btn.secondary { background: linear-gradient(135deg, #48dbfb, #0abde3); box-shadow: 0 8px 20px rgba(10,189,227,0.4); }
-  .btn.shop { background: linear-gradient(135deg, #feca57, #ff9f43); box-shadow: 0 8px 20px rgba(255,159,67,0.4); color: #3d2800; }
-  .btn.coin { background: linear-gradient(135deg, #feca57, #ff9f43); box-shadow: 0 8px 20px rgba(255,159,67,0.4); color: #3d2800; }
-  .btn.wheel { background: linear-gradient(135deg, #a55eea, #8854d0); box-shadow: 0 8px 20px rgba(136,84,208,0.5); }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(0.5); }
+  .btn.secondary { background: linear-gradient(135deg, #48dbfb, #0abde3); }
+  .btn.shop { background: linear-gradient(135deg, #feca57, #ff9f43); color: #3d2800; }
+  .btn.coin { background: linear-gradient(135deg, #feca57, #ff9f43); color: #3d2800; }
+  .btn.wheel { background: linear-gradient(135deg, #a55eea, #8854d0); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   #levelSelect { background: radial-gradient(ellipse at center, #1e3c72 0%, #1a1a2e 70%); }
   #levelSelect h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 0.5rem; text-align: center; padding: 0 1rem; }
   .levels-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.8rem; max-width: 900px; width: 100%; padding: 1rem;
-    overflow-y: visible;
   }
   .level-card {
     aspect-ratio: 1; border-radius: 20px; cursor: pointer; position: relative; overflow: hidden;
@@ -87,9 +86,8 @@
   .skip-btn {
     position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.7);
     border: 2px solid rgba(254,202,87,0.6); color: #feca57; font-size: 0.75rem; font-weight: bold;
-    padding: 0.2rem 0.5rem; border-radius: 15px; cursor: pointer; touch-action: manipulation; z-index: 2;
+    padding: 0.2rem 0.5rem; border-radius: 15px; cursor: pointer; z-index: 2;
   }
-  .skip-btn:active { transform: scale(0.9); }
 
   #shopScreen { background: radial-gradient(ellipse at center, #3d1b69 0%, #1a1a2e 70%); padding: max(70px, calc(env(safe-area-inset-top) + 70px)) 1rem 2rem; }
   #shopScreen h1 {
@@ -102,26 +100,23 @@
   .shop-tab {
     padding: 0.6rem 1.2rem; border-radius: 25px; background: transparent; color: #a0a0c0;
     border: none; font-weight: bold; cursor: pointer; font-size: clamp(0.85rem, 2.3vw, 1rem);
-    transition: all 0.2s; touch-action: manipulation;
   }
   .shop-tab.active { background: linear-gradient(135deg, #feca57, #ff9f43); color: #3d2800; }
   .shop-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 1rem; max-width: 900px; width: 100%; padding: 1rem;
-    overflow-y: visible;
   }
   .skin-card, .bg-card, .ability-card {
-    min-height: 200px; border-radius: 20px; cursor: pointer; position: relative; overflow: visible;
+    min-height: 200px; border-radius: 20px; cursor: pointer; position: relative;
     transition: transform 0.2s, border-color 0.2s; display: flex; flex-direction: column;
     align-items: center; justify-content: space-between; font-weight: bold;
     border: 3px solid rgba(255,255,255,0.15); touch-action: manipulation;
     background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 0.8rem 0.5rem;
+    backdrop-filter: blur(10px); padding: 0.8rem 0.5rem;
   }
   .skin-card:active, .bg-card:active, .ability-card:active { transform: scale(0.95); }
   .skin-card.selected, .bg-card.selected, .ability-card.selected {
     border-color: #26de81; box-shadow: 0 0 25px rgba(38,222,129,0.5);
-    background: linear-gradient(135deg, rgba(38,222,129,0.15), rgba(38,222,129,0.05));
   }
   .skin-card.owned:not(.selected), .bg-card.owned:not(.selected), .ability-card.owned:not(.selected) {
     border-color: rgba(72,219,251,0.5);
@@ -172,14 +167,12 @@
   .hud-item {
     background: rgba(0,0,0,0.5); padding: 0.4rem 0.9rem; border-radius: 30px;
     font-size: clamp(0.85rem, 2.5vw, 1.1rem); font-weight: bold;
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.2); white-space: nowrap;
+    backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.2); white-space: nowrap;
   }
   #pauseBtn {
     pointer-events: auto; cursor: pointer; background: rgba(0,0,0,0.5);
     border: 2px solid rgba(255,255,255,0.2); color: white; padding: 0.4rem 0.9rem;
     border-radius: 30px; font-size: clamp(0.85rem, 2.5vw, 1.1rem); font-weight: bold;
-    touch-action: manipulation;
   }
 
   .abilities-bar { display: flex; gap: 6px; pointer-events: auto; }
@@ -188,7 +181,7 @@
     background: rgba(0,0,0,0.6); border: 2px solid rgba(255,255,255,0.3);
     display: flex; align-items: center; justify-content: center;
     font-size: clamp(1.2rem, 4vw, 1.5rem); position: relative; cursor: pointer;
-    touch-action: manipulation; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    touch-action: manipulation; backdrop-filter: blur(10px);
     transition: all 0.2s; overflow: hidden;
   }
   .ability-icon.ready { border-color: #26de81; box-shadow: 0 0 10px rgba(38,222,129,0.5); }
@@ -209,7 +202,7 @@
   .modal {
     position: fixed; inset: 0; background: rgba(0,0,0,0.7);
     display: flex; align-items: center; justify-content: center; z-index: 100;
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); padding: 1rem;
+    backdrop-filter: blur(5px); padding: 1rem;
   }
   .modal-content {
     background: linear-gradient(135deg, #2d1b69, #1a1a2e);
@@ -237,8 +230,8 @@
     border-radius: 50%; background: rgba(255,255,255,0.15);
     border: 3px solid rgba(255,255,255,0.35); color: white;
     font-size: clamp(1.5rem, 5vw, 2rem); font-weight: bold;
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    touch-action: none; display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(10px); touch-action: none;
+    display: flex; align-items: center; justify-content: center;
     transition: background 0.1s, transform 0.1s;
   }
   .mobile-btn.active { background: rgba(255,255,255,0.35); transform: scale(0.92); }
@@ -295,7 +288,7 @@
   .wheel-modal {
     position: fixed; inset: 0; background: rgba(0,0,0,0.85);
     display: flex; align-items: center; justify-content: center; z-index: 200;
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 1rem;
+    backdrop-filter: blur(8px); padding: 1rem;
   }
   .wheel-container {
     background: linear-gradient(135deg, #2d1b69, #1a1a2e);
@@ -329,8 +322,7 @@
   .wheel-canvas.spinning { pointer-events: none; }
   .wheel-result {
     font-size: clamp(1.2rem, 4vw, 1.6rem); font-weight: bold;
-    margin: 1rem 0; min-height: 2rem;
-    color: #feca57;
+    margin: 1rem 0; min-height: 2rem; color: #feca57;
   }
   .wheel-result.win { color: #26de81; animation: winPulse 0.6s ease-in-out 3; }
   .wheel-result.lose { color: #ff6b6b; }
@@ -341,7 +333,7 @@
 <div id="app">
 
   <div id="menu" class="screen">
-    <div class="stats-display">👥 <span id="onlineCount">0</span> онлайн | ️ <span id="visitorCount">0</span> всего</div>
+    <div class="stats-display" id="statsDisplay">👥 <span id="onlineCount">—</span> онлайн | 👁️ <span id="visitorCount">—</span> всего</div>
     <div class="balance-display">💰 <span id="menuBalance">0</span></div>
     <h1 class="title">ПРЫГ-СКОК</h1>
     <p class="subtitle">✨ Большое приключение ✨</p>
@@ -391,7 +383,7 @@
         <button class="mobile-btn" data-key="right">▶</button>
       </div>
       <div class="mobile-abilities" id="mobileAbilities">
-        <button class="mobile-btn" data-key="jump"></button>
+        <button class="mobile-btn" data-key="jump">⤴</button>
       </div>
     </div>
     <div id="swipeHint">Свайп вверх = прыжок 🚀<br>Кнопки справа — суперспособности!</div>
@@ -401,8 +393,80 @@
 
 <div id="toast"></div>
 
+<!-- FIREBASE MODULE -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getDatabase, ref, set, onValue, onDisconnect, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCkdKg9fDtCyQLuYyCJr1aAzu3rhPBKzQw",
+  authDomain: "sjsnn-88243.firebaseapp.com",
+  databaseURL: "https://sjsnn-88243-default-rtdb.firebaseio.com",
+  projectId: "sjsnn-88243",
+  storageBucket: "sjsnn-88243.firebasestorage.app",
+  messagingSenderId: "712414175280",
+  appId: "1:712414175280:web:85ca86b3ef7df1439e8df5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let userId = localStorage.getItem('jumpUserId');
+if (!userId) {
+  userId = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+  localStorage.setItem('jumpUserId', userId);
+}
+
+const userStatusRef = ref(db, 'status/' + userId);
+const statusRef = ref(db, 'status');
+const totalVisitorsRef = ref(db, 'stats/totalVisitors');
+
+function setUserOnline() {
+  const updates = {};
+  updates['status/' + userId] = { state: 'online', lastSeen: Date.now() };
+  updates['stats/totalVisitors'] = increment(1);
+  set(ref(db), updates);
+  onDisconnect(userStatusRef).set({ state: 'offline', lastSeen: Date.now() });
+}
+
+function startOnlineListener() {
+  onValue(statusRef, (snapshot) => {
+    let count = 0;
+    const now = Date.now();
+    const fiveMinutesAgo = now - 5 * 60 * 1000;
+    if (snapshot.exists()) {
+      snapshot.forEach((child) => {
+        const data = child.val();
+        if (data && data.lastSeen && data.lastSeen > fiveMinutesAgo) count++;
+      });
+    }
+    const onlineEl = document.getElementById('onlineCount');
+    if (onlineEl) onlineEl.textContent = count;
+  });
+}
+
+function startVisitorListener() {
+  onValue(totalVisitorsRef, (snapshot) => {
+    const count = snapshot.val() || 0;
+    const visitorEl = document.getElementById('visitorCount');
+    if (visitorEl) visitorEl.textContent = count;
+  });
+}
+
+setUserOnline();
+startOnlineListener();
+startVisitorListener();
+setInterval(setUserOnline, 30000);
+
+window.addEventListener('beforeunload', () => {
+  set(userStatusRef, { state: 'offline', lastSeen: Date.now() });
+});
+
+console.log('✅ Firebase подключён! UserID:', userId);
+</script>
+
+<!-- GAME SCRIPT -->
 <script>
-// ============ STATE ============
 let progress = JSON.parse(localStorage.getItem('jumpGameProgress') || '{}');
 if (!progress.unlocked) progress.unlocked = 1;
 if (!progress.stars) progress.stars = {};
@@ -415,20 +479,11 @@ if (!progress.ownedAbilities) progress.ownedAbilities = [];
 
 function saveProgress() { localStorage.setItem('jumpGameProgress', JSON.stringify(progress)); }
 
-// ============ VISITOR & ONLINE COUNTERS ============
 function updateCounters() {
-  let visitors = parseInt(localStorage.getItem('totalVisitors') || '0');
-  if (!sessionStorage.getItem('visited')) {
-    visitors++;
-    localStorage.setItem('totalVisitors', visitors);
-    sessionStorage.setItem('visited', 'true');
-  }
-  document.getElementById('visitorCount').textContent = visitors;
-  const online = Math.floor(Math.random() * 60) + 20;
-  document.getElementById('onlineCount').textContent = online;
+  const onlineEl = document.getElementById('onlineCount');
+  if (onlineEl && onlineEl.textContent === '—') onlineEl.textContent = '1';
 }
 
-// ============ SKINS ============
 const SKINS = [
   { id: 'default', name: 'Стандарт', price: 0, colors: { body: '#48dbfb', belly: '#e0f6ff', legs: '#0abde3', eye: 'black' } },
   { id: 'fire', name: 'Огонёк', price: 5, colors: { body: '#ff6b6b', belly: '#feca57', legs: '#ee5a6f', eye: '#2d0000' } },
@@ -454,7 +509,6 @@ const SKINS = [
 
 function getCurrentSkin() { return SKINS.find(s => s.id === progress.selectedSkin) || SKINS[0]; }
 
-// ============ BACKGROUNDS ============
 const BACKGROUNDS = [
   { id: 'default', name: 'По умолчанию', price: 0, type: 'gradient', colors: ['#87ceeb', '#e0f6ff'] },
   { id: 'sunset', name: 'Закат', price: 8, type: 'gradient', colors: ['#ff6b6b', '#feca57'] },
@@ -478,21 +532,19 @@ const BACKGROUNDS = [
 
 function getCurrentBg() { return BACKGROUNDS.find(b => b.id === progress.selectedBg) || BACKGROUNDS[0]; }
 
-// ============ ABILITIES ============
 const ABILITIES = {
-  dash: { id: 'dash', name: 'Рывок', icon: '', key: 'E', color: '#feca57', price: 20, desc: 'Мощный рывок вперёд', cooldown: 180, duration: 12, dashSpeed: 22 },
+  dash: { id: 'dash', name: 'Рывок', icon: '⚡', key: 'E', color: '#feca57', price: 20, desc: 'Мощный рывок вперёд', cooldown: 180, duration: 12, dashSpeed: 22 },
   shield: { id: 'shield', name: 'Щит', icon: '🛡️', key: 'Q', color: '#48dbfb', price: 35, desc: 'Защита от одного удара', cooldown: 900, duration: 600 },
   magnet: { id: 'magnet', name: 'Магнит', icon: '🧲', key: 'F', color: '#ff6b6b', price: 30, desc: 'Притягивает монеты', cooldown: 600, duration: 300, radius: 180 },
   doubleJump: { id: 'doubleJump', name: 'Двойной прыжок', icon: '🦘', key: 'Shift', color: '#26de81', price: 25, desc: 'Прыжок в воздухе', cooldown: 0, passive: true },
   slowMo: { id: 'slowMo', name: 'Замедление', icon: '⏳', key: 'Z', color: '#a55eea', price: 40, desc: 'Замедляет время на 5 сек', cooldown: 600, duration: 300 },
-  teleport: { id: 'teleport', name: 'Телепорт', icon: '', key: 'X', color: '#ff9ff3', price: 45, desc: 'Мгновенный прыжок вперёд', cooldown: 480, duration: 1, teleportDist: 200 },
+  teleport: { id: 'teleport', name: 'Телепорт', icon: '🌀', key: 'X', color: '#ff9ff3', price: 45, desc: 'Мгновенный прыжок вперёд', cooldown: 480, duration: 1, teleportDist: 200 },
   invisibility: { id: 'invisibility', name: 'Невидимость', icon: '👻', key: 'C', color: '#dfe6e9', price: 50, desc: 'Враги не видят тебя 4 сек', cooldown: 720, duration: 240 }
 };
 
 const ABILITY_ORDER = ['dash', 'shield', 'magnet', 'doubleJump', 'slowMo', 'teleport', 'invisibility'];
 function getOwnedAbilities() { return ABILITY_ORDER.filter(id => progress.ownedAbilities.includes(id)); }
 
-// ============ CANVAS & SCREENS ============
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const GAME_W = 1200, GAME_H = 600;
@@ -516,116 +568,115 @@ function updateBalanceDisplays() {
   document.getElementById('shopBalance').textContent = progress.totalCoins;
 }
 
-// ============ LEVELS ============
 function makeLevels() {
   return [
-    { name: 'Первые шаги', theme: 'meadow', bg: ['#87ceeb', '#e0f6ff'], spawn: { x: 50, y: 400 },
+    { name: 'Первые шаги', bg: ['#87ceeb', '#e0f6ff'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 1200, h: 50 }, { x: 250, y: 470, w: 120, h: 20 }, { x: 450, y: 400, w: 120, h: 20 }, { x: 650, y: 340, w: 120, h: 20 }, { x: 850, y: 280, w: 150, h: 20 }],
       coins: [{ x: 300, y: 430 }, { x: 500, y: 360 }, { x: 700, y: 300 }, { x: 900, y: 240 }],
       enemies: [{ x: 400, y: 520, minX: 350, maxX: 600, speed: 1.5 }],
       spikes: [], moving: [], flag: { x: 1100, y: 490 }, totalCoins: 4 },
-    { name: 'Выше облаков', theme: 'sky', bg: ['#ffb3ba', '#ffe5e5'], spawn: { x: 50, y: 400 },
+    { name: 'Выше облаков', bg: ['#ffb3ba', '#ffe5e5'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 200, h: 50 }, { x: 280, y: 480, w: 100, h: 20 }, { x: 450, y: 400, w: 100, h: 20 }, { x: 620, y: 320, w: 100, h: 20 }, { x: 790, y: 250, w: 100, h: 20 }, { x: 960, y: 320, w: 100, h: 20 }, { x: 1100, y: 400, w: 100, h: 20 }],
       coins: [{ x: 320, y: 440 }, { x: 490, y: 360 }, { x: 660, y: 280 }, { x: 830, y: 210 }, { x: 1000, y: 280 }, { x: 1140, y: 360 }],
       enemies: [{ x: 100, y: 520, minX: 20, maxX: 180, speed: 1.5 }, { x: 800, y: 220, minX: 790, maxX: 880, speed: 1 }],
       spikes: [], moving: [], flag: { x: 1140, y: 340 }, totalCoins: 6 },
-    { name: 'Движущиеся платформы', theme: 'sunset', bg: ['#ffd89b', '#fff4d6'], spawn: { x: 50, y: 400 },
+    { name: 'Движущиеся платформы', bg: ['#ffd89b', '#fff4d6'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 200, h: 50 }, { x: 500, y: 450, w: 100, h: 20 }, { x: 900, y: 400, w: 100, h: 20 }, { x: 1100, y: 550, w: 100, h: 50 }],
       coins: [{ x: 350, y: 400 }, { x: 700, y: 350 }, { x: 1050, y: 350 }, { x: 1140, y: 500 }],
       enemies: [{ x: 100, y: 520, minX: 20, maxX: 180, speed: 2 }], spikes: [],
       moving: [{ x: 250, y: 450, w: 80, h: 20, minX: 250, maxX: 450, speed: 1.5, dir: 1 }, { x: 600, y: 380, w: 80, h: 20, minY: 300, maxY: 450, speed: 1.2, dir: 1, vertical: true }, { x: 750, y: 320, w: 80, h: 20, minX: 700, maxX: 900, speed: 2, dir: 1 }],
       flag: { x: 1140, y: 490 }, totalCoins: 4 },
-    { name: 'Ловушки', theme: 'danger', bg: ['#ff9a9e', '#fad0c4'], spawn: { x: 50, y: 400 },
+    { name: 'Ловушки', bg: ['#ff9a9e', '#fad0c4'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 300, h: 50 }, { x: 400, y: 550, w: 150, h: 50 }, { x: 650, y: 550, w: 150, h: 50 }, { x: 900, y: 550, w: 300, h: 50 }, { x: 200, y: 420, w: 80, h: 20 }, { x: 400, y: 350, w: 80, h: 20 }, { x: 600, y: 280, w: 80, h: 20 }, { x: 800, y: 350, w: 80, h: 20 }, { x: 1000, y: 420, w: 80, h: 20 }],
       coins: [{ x: 230, y: 380 }, { x: 430, y: 310 }, { x: 630, y: 240 }, { x: 830, y: 310 }, { x: 1030, y: 380 }],
       enemies: [{ x: 450, y: 520, minX: 400, maxX: 540, speed: 2 }, { x: 700, y: 520, minX: 650, maxX: 790, speed: 2 }, { x: 1000, y: 520, minX: 900, maxX: 1180, speed: 2.5 }],
       spikes: [{ x: 300, y: 530, w: 100, h: 20 }, { x: 550, y: 530, w: 100, h: 20 }, { x: 800, y: 530, w: 100, h: 20 }], moving: [],
       flag: { x: 1150, y: 490 }, totalCoins: 5 },
-    { name: 'Финал главы 1', theme: 'purple', bg: ['#a18cd1', '#fbc2eb'], spawn: { x: 50, y: 400 },
+    { name: 'Финал главы 1', bg: ['#a18cd1', '#fbc2eb'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 150, h: 50 }, { x: 300, y: 480, w: 80, h: 20 }, { x: 500, y: 400, w: 80, h: 20 }, { x: 700, y: 320, w: 80, h: 20 }, { x: 900, y: 400, w: 80, h: 20 }, { x: 1100, y: 480, w: 100, h: 20 }],
       coins: [{ x: 330, y: 440 }, { x: 530, y: 360 }, { x: 730, y: 280 }, { x: 930, y: 360 }, { x: 1140, y: 440 }, { x: 600, y: 200 }],
       enemies: [{ x: 350, y: 450, minX: 300, maxX: 370, speed: 1.5 }, { x: 750, y: 290, minX: 700, maxX: 770, speed: 1.5 }, { x: 1120, y: 450, minX: 1100, maxX: 1190, speed: 2 }],
       spikes: [{ x: 150, y: 530, w: 150, h: 20 }, { x: 400, y: 530, w: 100, h: 20 }, { x: 600, y: 530, w: 100, h: 20 }, { x: 800, y: 530, w: 100, h: 20 }, { x: 1000, y: 530, w: 100, h: 20 }],
       moving: [{ x: 200, y: 400, w: 80, h: 20, minX: 150, maxX: 280, speed: 1.5, dir: 1 }],
       flag: { x: 1140, y: 420 }, totalCoins: 6 },
-    { name: 'Лесная тропа', theme: 'forest', bg: ['#2d5016', '#87a96b'], spawn: { x: 50, y: 400 },
+    { name: 'Лесная тропа', bg: ['#2d5016', '#87a96b'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 250, h: 50 }, { x: 350, y: 500, w: 100, h: 20 }, { x: 550, y: 430, w: 100, h: 20 }, { x: 750, y: 360, w: 100, h: 20 }, { x: 950, y: 430, w: 100, h: 20 }, { x: 1100, y: 550, w: 100, h: 50 }],
       coins: [{ x: 390, y: 460 }, { x: 590, y: 390 }, { x: 790, y: 320 }, { x: 990, y: 390 }, { x: 650, y: 250 }],
       enemies: [{ x: 100, y: 520, minX: 20, maxX: 230, speed: 2 }, { x: 780, y: 330, minX: 750, maxX: 840, speed: 1.5 }],
       spikes: [{ x: 250, y: 530, w: 100, h: 20 }, { x: 850, y: 530, w: 100, h: 20 }],
       moving: [{ x: 450, y: 350, w: 80, h: 20, minX: 400, maxX: 520, speed: 1.5, dir: 1 }],
       flag: { x: 1140, y: 490 }, totalCoins: 5 },
-    { name: 'Пустыня', theme: 'desert', bg: ['#f4a460', '#ffd89b'], spawn: { x: 50, y: 400 },
+    { name: 'Пустыня', bg: ['#f4a460', '#ffd89b'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 180, h: 50 }, { x: 280, y: 480, w: 80, h: 20 }, { x: 450, y: 400, w: 80, h: 20 }, { x: 620, y: 320, w: 80, h: 20 }, { x: 790, y: 400, w: 80, h: 20 }, { x: 960, y: 480, w: 80, h: 20 }, { x: 1100, y: 550, w: 100, h: 50 }],
       coins: [{ x: 310, y: 440 }, { x: 480, y: 360 }, { x: 650, y: 280 }, { x: 820, y: 360 }, { x: 990, y: 440 }, { x: 700, y: 200 }],
       enemies: [{ x: 100, y: 520, minX: 20, maxX: 160, speed: 2.5 }, { x: 650, y: 290, minX: 620, maxX: 690, speed: 2 }],
       spikes: [{ x: 180, y: 530, w: 100, h: 20 }, { x: 360, y: 530, w: 90, h: 20 }, { x: 530, y: 530, w: 90, h: 20 }, { x: 700, y: 530, w: 90, h: 20 }, { x: 870, y: 530, w: 90, h: 20 }],
       moving: [{ x: 350, y: 350, w: 80, h: 20, minX: 300, maxX: 420, speed: 1.8, dir: 1 }],
       flag: { x: 1140, y: 490 }, totalCoins: 6 },
-    { name: 'Подводный мир', theme: 'ocean', bg: ['#006994', '#40e0d0'], spawn: { x: 50, y: 400 },
+    { name: 'Подводный мир', bg: ['#006994', '#40e0d0'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 150, h: 50 }, { x: 250, y: 480, w: 80, h: 20 }, { x: 420, y: 400, w: 80, h: 20 }, { x: 590, y: 320, w: 80, h: 20 }, { x: 760, y: 250, w: 80, h: 20 }, { x: 930, y: 320, w: 80, h: 20 }, { x: 1100, y: 400, w: 100, h: 20 }],
       coins: [{ x: 280, y: 440 }, { x: 450, y: 360 }, { x: 620, y: 280 }, { x: 790, y: 210 }, { x: 960, y: 280 }, { x: 1140, y: 360 }],
       enemies: [{ x: 280, y: 450, minX: 250, maxX: 320, speed: 2 }, { x: 620, y: 290, minX: 590, maxX: 660, speed: 2 }, { x: 960, y: 290, minX: 930, maxX: 1000, speed: 2 }],
       spikes: [{ x: 150, y: 530, w: 100, h: 20 }, { x: 330, y: 530, w: 90, h: 20 }, { x: 500, y: 530, w: 90, h: 20 }, { x: 670, y: 530, w: 90, h: 20 }, { x: 840, y: 530, w: 90, h: 20 }, { x: 1010, y: 530, w: 90, h: 20 }],
       moving: [{ x: 500, y: 450, w: 80, h: 20, minY: 380, maxY: 500, speed: 1.5, dir: 1, vertical: true }],
       flag: { x: 1140, y: 340 }, totalCoins: 6 },
-    { name: 'Ледяные вершины', theme: 'ice', bg: ['#a8c0d6', '#ffffff'], spawn: { x: 50, y: 400 },
+    { name: 'Ледяные вершины', bg: ['#a8c0d6', '#ffffff'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 200, h: 50 }, { x: 300, y: 470, w: 100, h: 20 }, { x: 500, y: 380, w: 100, h: 20 }, { x: 700, y: 300, w: 100, h: 20 }, { x: 900, y: 220, w: 100, h: 20 }, { x: 1100, y: 300, w: 100, h: 20 }],
       coins: [{ x: 340, y: 430 }, { x: 540, y: 340 }, { x: 740, y: 260 }, { x: 940, y: 180 }, { x: 1140, y: 260 }, { x: 600, y: 200 }],
       enemies: [{ x: 100, y: 520, minX: 20, maxX: 180, speed: 2.5 }, { x: 730, y: 270, minX: 700, maxX: 790, speed: 2 }, { x: 1130, y: 270, minX: 1100, maxX: 1190, speed: 2 }],
       spikes: [{ x: 200, y: 530, w: 100, h: 20 }, { x: 400, y: 530, w: 100, h: 20 }, { x: 600, y: 530, w: 100, h: 20 }, { x: 800, y: 530, w: 100, h: 20 }, { x: 1000, y: 530, w: 100, h: 20 }],
       moving: [{ x: 400, y: 400, w: 80, h: 20, minX: 350, maxX: 470, speed: 2, dir: 1 }, { x: 800, y: 350, w: 80, h: 20, minY: 280, maxY: 400, speed: 1.5, dir: 1, vertical: true }],
       flag: { x: 1140, y: 240 }, totalCoins: 6 },
-    { name: 'Космическая станция', theme: 'space', bg: ['#000033', '#4b0082'], spawn: { x: 50, y: 400 },
+    { name: 'Космическая станция', bg: ['#000033', '#4b0082'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 150, h: 50 }, { x: 250, y: 470, w: 80, h: 20 }, { x: 420, y: 390, w: 80, h: 20 }, { x: 590, y: 310, w: 80, h: 20 }, { x: 760, y: 390, w: 80, h: 20 }, { x: 930, y: 470, w: 80, h: 20 }, { x: 1100, y: 550, w: 100, h: 50 }],
       coins: [{ x: 280, y: 430 }, { x: 450, y: 350 }, { x: 620, y: 270 }, { x: 790, y: 350 }, { x: 960, y: 430 }, { x: 600, y: 180 }],
       enemies: [{ x: 280, y: 440, minX: 250, maxX: 320, speed: 2.5 }, { x: 620, y: 280, minX: 590, maxX: 660, speed: 2.5 }, { x: 960, y: 440, minX: 930, maxX: 1000, speed: 2.5 }],
       spikes: [{ x: 150, y: 530, w: 100, h: 20 }, { x: 330, y: 530, w: 90, h: 20 }, { x: 500, y: 530, w: 90, h: 20 }, { x: 670, y: 530, w: 90, h: 20 }, { x: 840, y: 530, w: 90, h: 20 }, { x: 1010, y: 530, w: 90, h: 20 }],
       moving: [{ x: 350, y: 350, w: 80, h: 20, minX: 300, maxX: 400, speed: 2, dir: 1 }, { x: 700, y: 450, w: 80, h: 20, minY: 380, maxY: 500, speed: 1.8, dir: 1, vertical: true }],
       flag: { x: 1140, y: 490 }, totalCoins: 6 },
-    { name: 'Вулкан', theme: 'lava', bg: ['#8b0000', '#ff4500'], spawn: { x: 50, y: 400 },
+    { name: 'Вулкан', bg: ['#8b0000', '#ff4500'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 150, h: 50 }, { x: 250, y: 480, w: 80, h: 20 }, { x: 420, y: 400, w: 80, h: 20 }, { x: 590, y: 320, w: 80, h: 20 }, { x: 760, y: 250, w: 80, h: 20 }, { x: 930, y: 320, w: 80, h: 20 }, { x: 1100, y: 400, w: 100, h: 20 }],
       coins: [{ x: 280, y: 440 }, { x: 450, y: 360 }, { x: 620, y: 280 }, { x: 790, y: 210 }, { x: 960, y: 280 }, { x: 1140, y: 360 }],
       enemies: [{ x: 280, y: 450, minX: 250, maxX: 320, speed: 3 }, { x: 620, y: 290, minX: 590, maxX: 660, speed: 2.5 }, { x: 960, y: 290, minX: 930, maxX: 1000, speed: 3 }],
       spikes: [{ x: 150, y: 530, w: 100, h: 20 }, { x: 330, y: 530, w: 90, h: 20 }, { x: 500, y: 530, w: 90, h: 20 }, { x: 670, y: 530, w: 90, h: 20 }, { x: 840, y: 530, w: 90, h: 20 }, { x: 1010, y: 530, w: 90, h: 20 }],
       moving: [{ x: 350, y: 350, w: 80, h: 20, minX: 300, maxX: 400, speed: 2.5, dir: 1 }, { x: 700, y: 380, w: 80, h: 20, minY: 300, maxY: 430, speed: 2, dir: 1, vertical: true }],
       flag: { x: 1140, y: 340 }, totalCoins: 6 },
-    { name: 'Финал!', theme: 'final', bg: ['#2d1b69', '#ff00ff'], spawn: { x: 50, y: 400 },
+    { name: 'Финал!', bg: ['#2d1b69', '#ff00ff'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 120, h: 50 }, { x: 220, y: 480, w: 70, h: 20 }, { x: 370, y: 400, w: 70, h: 20 }, { x: 520, y: 320, w: 70, h: 20 }, { x: 670, y: 250, w: 70, h: 20 }, { x: 820, y: 320, w: 70, h: 20 }, { x: 970, y: 400, w: 70, h: 20 }, { x: 1100, y: 480, w: 100, h: 20 }],
       coins: [{ x: 250, y: 440 }, { x: 400, y: 360 }, { x: 550, y: 280 }, { x: 700, y: 210 }, { x: 850, y: 280 }, { x: 1000, y: 360 }, { x: 1140, y: 440 }, { x: 600, y: 150 }],
       enemies: [{ x: 250, y: 450, minX: 220, maxX: 280, speed: 3 }, { x: 550, y: 290, minX: 520, maxX: 580, speed: 3 }, { x: 850, y: 290, minX: 820, maxX: 880, speed: 3 }, { x: 1130, y: 450, minX: 1100, maxX: 1190, speed: 3.5 }],
       spikes: [{ x: 120, y: 530, w: 100, h: 20 }, { x: 290, y: 530, w: 80, h: 20 }, { x: 440, y: 530, w: 80, h: 20 }, { x: 590, y: 530, w: 80, h: 20 }, { x: 740, y: 530, w: 80, h: 20 }, { x: 890, y: 530, w: 80, h: 20 }, { x: 1040, y: 530, w: 60, h: 20 }],
       moving: [{ x: 300, y: 350, w: 70, h: 20, minX: 250, maxX: 350, speed: 2.5, dir: 1 }, { x: 600, y: 400, w: 70, h: 20, minY: 320, maxY: 450, speed: 2, dir: 1, vertical: true }, { x: 900, y: 350, w: 70, h: 20, minX: 850, maxX: 950, speed: 2.5, dir: 1 }],
       flag: { x: 1140, y: 420 }, totalCoins: 8 },
-    { name: 'Зомби-апокалипсис', theme: 'zombie', bg: ['#2d5016', '#4a7c36'], spawn: { x: 50, y: 400 },
+    { name: 'Зомби-апокалипсис', bg: ['#2d5016', '#4a7c36'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 180, h: 50 }, { x: 280, y: 470, w: 90, h: 20 }, { x: 470, y: 390, w: 90, h: 20 }, { x: 660, y: 310, w: 90, h: 20 }, { x: 850, y: 230, w: 90, h: 20 }, { x: 1050, y: 310, w: 150, h: 20 }],
       coins: [{ x: 320, y: 430 }, { x: 510, y: 350 }, { x: 700, y: 270 }, { x: 890, y: 190 }, { x: 1100, y: 270 }, { x: 600, y: 180 }],
       enemies: [{ x: 100, y: 520, minX: 20, maxX: 160, speed: 2 }, { x: 500, y: 360, minX: 470, maxX: 550, speed: 2.5 }, { x: 880, y: 200, minX: 850, maxX: 930, speed: 2.5 }],
       spikes: [{ x: 180, y: 530, w: 100, h: 20 }, { x: 370, y: 530, w: 100, h: 20 }, { x: 560, y: 530, w: 100, h: 20 }, { x: 750, y: 530, w: 100, h: 20 }, { x: 940, y: 530, w: 100, h: 20 }],
       moving: [{ x: 200, y: 380, w: 80, h: 20, minX: 180, maxX: 260, speed: 2, dir: 1 }],
       flag: { x: 1140, y: 250 }, totalCoins: 6 },
-    { name: 'Пиратский остров', theme: 'pirate', bg: ['#f4a460', '#87ceeb'], spawn: { x: 50, y: 400 },
+    { name: 'Пиратский остров', bg: ['#f4a460', '#87ceeb'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 150, h: 50 }, { x: 250, y: 480, w: 80, h: 20 }, { x: 430, y: 400, w: 80, h: 20 }, { x: 610, y: 320, w: 80, h: 20 }, { x: 790, y: 240, w: 80, h: 20 }, { x: 970, y: 320, w: 80, h: 20 }, { x: 1100, y: 420, w: 100, h: 20 }],
       coins: [{ x: 290, y: 440 }, { x: 470, y: 360 }, { x: 650, y: 280 }, { x: 830, y: 200 }, { x: 1010, y: 280 }, { x: 1140, y: 380 }, { x: 700, y: 150 }],
       enemies: [{ x: 280, y: 450, minX: 250, maxX: 320, speed: 2 }, { x: 640, y: 290, minX: 610, maxX: 680, speed: 2.5 }, { x: 1000, y: 290, minX: 970, maxX: 1040, speed: 2 }],
       spikes: [{ x: 150, y: 530, w: 100, h: 20 }, { x: 330, y: 530, w: 100, h: 20 }, { x: 510, y: 530, w: 100, h: 20 }, { x: 690, y: 530, w: 100, h: 20 }, { x: 870, y: 530, w: 100, h: 20 }, { x: 1050, y: 530, w: 100, h: 20 }],
       moving: [{ x: 350, y: 350, w: 80, h: 20, minX: 300, maxX: 400, speed: 2, dir: 1 }, { x: 700, y: 400, w: 80, h: 20, minY: 320, maxY: 450, speed: 1.8, dir: 1, vertical: true }],
       flag: { x: 1140, y: 360 }, totalCoins: 7 },
-    { name: 'Инопланетный мир', theme: 'alien', bg: ['#7bed9f', '#2ed573'], spawn: { x: 50, y: 400 },
+    { name: 'Инопланетный мир', bg: ['#7bed9f', '#2ed573'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 150, h: 50 }, { x: 250, y: 470, w: 70, h: 20 }, { x: 400, y: 380, w: 70, h: 20 }, { x: 550, y: 290, w: 70, h: 20 }, { x: 700, y: 200, w: 70, h: 20 }, { x: 850, y: 290, w: 70, h: 20 }, { x: 1000, y: 380, w: 70, h: 20 }, { x: 1100, y: 470, w: 100, h: 20 }],
       coins: [{ x: 280, y: 430 }, { x: 430, y: 340 }, { x: 580, y: 250 }, { x: 730, y: 160 }, { x: 880, y: 250 }, { x: 1030, y: 340 }, { x: 1140, y: 430 }, { x: 600, y: 120 }],
       enemies: [{ x: 280, y: 440, minX: 250, maxX: 310, speed: 2.5 }, { x: 580, y: 260, minX: 550, maxX: 610, speed: 2.5 }, { x: 880, y: 260, minX: 850, maxX: 910, speed: 2.5 }, { x: 1130, y: 440, minX: 1100, maxX: 1190, speed: 3 }],
       spikes: [{ x: 150, y: 530, w: 100, h: 20 }, { x: 320, y: 530, w: 80, h: 20 }, { x: 470, y: 530, w: 80, h: 20 }, { x: 620, y: 530, w: 80, h: 20 }, { x: 770, y: 530, w: 80, h: 20 }, { x: 920, y: 530, w: 80, h: 20 }, { x: 1070, y: 530, w: 80, h: 20 }],
       moving: [{ x: 320, y: 330, w: 70, h: 20, minX: 280, maxX: 380, speed: 2.5, dir: 1 }, { x: 620, y: 380, w: 70, h: 20, minY: 300, maxY: 430, speed: 2, dir: 1, vertical: true }, { x: 920, y: 330, w: 70, h: 20, minX: 880, maxX: 980, speed: 2.5, dir: 1 }],
       flag: { x: 1140, y: 410 }, totalCoins: 8 },
-    { name: 'Огненный феникс', theme: 'phoenix', bg: ['#ff4757', '#ffa502'], spawn: { x: 50, y: 400 },
+    { name: 'Огненный феникс', bg: ['#ff4757', '#ffa502'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 120, h: 50 }, { x: 220, y: 480, w: 70, h: 20 }, { x: 380, y: 400, w: 70, h: 20 }, { x: 540, y: 320, w: 70, h: 20 }, { x: 700, y: 240, w: 70, h: 20 }, { x: 860, y: 320, w: 70, h: 20 }, { x: 1020, y: 400, w: 70, h: 20 }, { x: 1100, y: 480, w: 100, h: 20 }],
       coins: [{ x: 250, y: 440 }, { x: 410, y: 360 }, { x: 570, y: 280 }, { x: 730, y: 200 }, { x: 890, y: 280 }, { x: 1050, y: 360 }, { x: 1140, y: 440 }, { x: 600, y: 150 }, { x: 900, y: 180 }],
       enemies: [{ x: 250, y: 450, minX: 220, maxX: 280, speed: 3 }, { x: 570, y: 290, minX: 540, maxX: 600, speed: 3 }, { x: 890, y: 290, minX: 860, maxX: 920, speed: 3 }, { x: 1130, y: 450, minX: 1100, maxX: 1190, speed: 3.5 }],
       spikes: [{ x: 120, y: 530, w: 100, h: 20 }, { x: 290, y: 530, w: 90, h: 20 }, { x: 450, y: 530, w: 90, h: 20 }, { x: 610, y: 530, w: 90, h: 20 }, { x: 770, y: 530, w: 90, h: 20 }, { x: 930, y: 530, w: 90, h: 20 }, { x: 1090, y: 530, w: 60, h: 20 }],
       moving: [{ x: 300, y: 350, w: 70, h: 20, minX: 250, maxX: 350, speed: 2.5, dir: 1 }, { x: 620, y: 400, w: 70, h: 20, minY: 320, maxY: 450, speed: 2, dir: 1, vertical: true }, { x: 940, y: 350, w: 70, h: 20, minX: 890, maxX: 990, speed: 2.5, dir: 1 }],
       flag: { x: 1140, y: 420 }, totalCoins: 9 },
-    { name: 'Кристальный храм', theme: 'crystal', bg: ['#70a1ff', '#5352ed'], spawn: { x: 50, y: 400 },
+    { name: 'Кристальный храм', bg: ['#70a1ff', '#5352ed'], spawn: { x: 50, y: 400 },
       platforms: [{ x: 0, y: 550, w: 100, h: 50 }, { x: 200, y: 480, w: 60, h: 20 }, { x: 340, y: 400, w: 60, h: 20 }, { x: 480, y: 320, w: 60, h: 20 }, { x: 620, y: 240, w: 60, h: 20 }, { x: 760, y: 320, w: 60, h: 20 }, { x: 900, y: 400, w: 60, h: 20 }, { x: 1040, y: 480, w: 60, h: 20 }, { x: 1100, y: 550, w: 100, h: 50 }],
       coins: [{ x: 230, y: 440 }, { x: 370, y: 360 }, { x: 510, y: 280 }, { x: 650, y: 200 }, { x: 790, y: 280 }, { x: 930, y: 360 }, { x: 1070, y: 440 }, { x: 600, y: 130 }, { x: 400, y: 200 }, { x: 800, y: 200 }],
       enemies: [{ x: 230, y: 450, minX: 200, maxX: 250, speed: 3 }, { x: 510, y: 290, minX: 480, maxX: 530, speed: 3 }, { x: 790, y: 290, minX: 760, maxX: 810, speed: 3 }, { x: 1070, y: 450, minX: 1040, maxX: 1090, speed: 3.5 }],
@@ -635,18 +686,13 @@ function makeLevels() {
   ];
 }
 
-// ============ GAME ============
 let game = null;
 const keys = {};
 
 function initAbilities() {
   return { 
-    dash: { cd: 0, active: 0 }, 
-    shield: { cd: 0, active: 0 }, 
-    magnet: { cd: 0, active: 0 }, 
-    slowMo: { cd: 0, active: 0 },
-    teleport: { cd: 0, active: 0 },
-    invisibility: { cd: 0, active: 0 },
+    dash: { cd: 0, active: 0 }, shield: { cd: 0, active: 0 }, magnet: { cd: 0, active: 0 }, 
+    slowMo: { cd: 0, active: 0 }, teleport: { cd: 0, active: 0 }, invisibility: { cd: 0, active: 0 },
     doubleJumpUsed: false 
   };
 }
@@ -692,7 +738,6 @@ function togglePause() {
   document.getElementById('pauseBtn').textContent = game.paused ? '▶' : '⏸';
 }
 
-// ============ ABILITIES ============
 function renderAbilitiesBar() {
   const bar = document.getElementById('abilitiesBar');
   bar.innerHTML = '';
@@ -722,10 +767,11 @@ function renderMobileAbilities() {
     btn.textContent = cfg.icon;
     container.appendChild(btn);
   });
+  // КНОПКА ПРЫЖКА С ИКОНКОЙ
   const jumpBtn = document.createElement('button');
   jumpBtn.className = 'mobile-btn';
   jumpBtn.dataset.key = 'jump';
-  jumpBtn.textContent = '';
+  jumpBtn.textContent = '⤴';
   container.appendChild(jumpBtn);
 
   container.querySelectorAll('.mobile-btn').forEach(btn => {
@@ -733,7 +779,12 @@ function renderMobileAbilities() {
     const abilityId = btn.dataset.ability;
     const press = e => {
       e.preventDefault(); e.stopPropagation();
-      if (k) { keys[k] = true; btn.classList.add('active'); }
+      if (k) { 
+        keys[k] = true; 
+        btn.classList.add('active');
+        // ПРЫЖОК ПО НАЖАТИЮ КНОПКИ
+        if (k === 'jump') doJump();
+      }
       if (abilityId) activateAbility(abilityId);
     };
     const release = e => {
@@ -788,7 +839,7 @@ function activateAbility(id) {
   } else if (id === 'shield') {
     ab.active = cfg.duration;
     game.player.shielded = true;
-    spawnAbilityNotice('🛡️ ЩИТ!', cfg.color);
+    spawnAbilityNotice('️ ЩИТ!', cfg.color);
     vibrate(50);
   } else if (id === 'magnet') {
     ab.active = cfg.duration;
@@ -809,13 +860,11 @@ function activateAbility(id) {
   } else if (id === 'invisibility') {
     ab.active = cfg.duration;
     game.player.invisible = true;
-    spawnAbilityNotice('👻 НЕВИДИМОСТЬ!', cfg.color);
+    spawnAbilityNotice(' НЕВИДИМОСТЬ!', cfg.color);
     vibrate(50);
   }
   
-  if (!cfg.passive) {
-    ab.cd = cfg.cooldown;
-  }
+  if (!cfg.passive) ab.cd = cfg.cooldown;
   updateAbilitiesUI();
 }
 
@@ -830,7 +879,6 @@ function spawnAbilityNotice(text, color) {
 
 function updateAbilities() {
   if (!game) return;
-  
   ['dash', 'shield', 'magnet', 'slowMo', 'teleport', 'invisibility'].forEach(id => {
     const ab = game.abilities[id];
     if (ab.cd > 0) ab.cd--;
@@ -843,14 +891,12 @@ function updateAbilities() {
       }
     }
   });
-  
   if (game.abilities.dash.active > 0) {
     game.player.dashTrail.push({ x: game.player.x, y: game.player.y, life: 15 });
     if (game.player.dashTrail.length > 8) game.player.dashTrail.shift();
   } else {
     game.player.dashTrail = game.player.dashTrail.filter(t => { t.life--; return t.life > 0; });
   }
-  
   if (progress.ownedAbilities.includes('magnet') && game.abilities.magnet.active > 0) {
     const p = game.player;
     const pcx = p.x + p.w / 2, pcy = p.y + p.h / 2;
@@ -867,7 +913,30 @@ function updateAbilities() {
   }
 }
 
-// ============ INPUT ============
+// ============ ПРЫЖОК (ИСПРАВЛЕН) ============
+function doJump() {
+  if (!game || game.paused || game.won || game.dead) return;
+  const p = game.player;
+  
+  // Обычный прыжок с земли
+  if (p.onGround) {
+    p.vy = -13;
+    p.onGround = false;
+    game.abilities.doubleJumpUsed = false;
+    spawnParticles(p.x + p.w/2, p.y + p.h, 5, '#ffffff');
+    return;
+  }
+  
+  // Двойной прыжок в воздухе (если куплен)
+  if (progress.ownedAbilities.includes('doubleJump') && !game.abilities.doubleJumpUsed) {
+    p.vy = -12;
+    game.abilities.doubleJumpUsed = true;
+    spawnParticles(p.x + p.w/2, p.y + p.h, 10, '#26de81');
+    spawnAbilityNotice('🦘 ДВОЙНОЙ!', '#26de81');
+    vibrate(25);
+  }
+}
+
 window.addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   keys[k] = true;
@@ -879,35 +948,12 @@ window.addEventListener('keydown', e => {
   if (k === 'z' && progress.ownedAbilities.includes('slowMo')) activateAbility('slowMo');
   if (k === 'x' && progress.ownedAbilities.includes('teleport')) activateAbility('teleport');
   if (k === 'c' && progress.ownedAbilities.includes('invisibility')) activateAbility('invisibility');
-  if (k === 'shift' && game && !game.paused && !game.won && !game.dead) {
-    if (progress.ownedAbilities.includes('doubleJump')) tryDoubleJump();
-    else showToast('Купи двойной прыжок!', 'info');
+  // ПРЫЖОК НА ПРОБЕЛ/СТРЕЛКУ ВВЕРХ
+  if ((k === ' ' || k === 'arrowup' || k === 'w') && game && !game.paused && !game.won && !game.dead) {
+    doJump();
   }
 });
 window.addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
-
-function tryDoubleJump() {
-  if (!game) return;
-  const p = game.player;
-  
-  // Если на земле - обычный прыжок
-  if (p.onGround) {
-    p.vy = -13;
-    p.onGround = false;
-    game.abilities.doubleJumpUsed = false;
-    spawnParticles(p.x + p.w/2, p.y + p.h, 5, '#ffffff');
-    return;
-  }
-  
-  // Если в воздухе и двойной прыжок ещё не использован
-  if (!game.abilities.doubleJumpUsed) {
-    p.vy = -12;
-    game.abilities.doubleJumpUsed = true;
-    spawnParticles(p.x + p.w/2, p.y + p.h, 10, '#26de81');
-    spawnAbilityNotice('🦘 ДВОЙНОЙ!', '#26de81');
-    vibrate(25);
-  }
-}
 
 document.querySelectorAll('#mobileControls .mobile-btn').forEach(btn => {
   const k = btn.dataset.key;
@@ -917,7 +963,7 @@ document.querySelectorAll('#mobileControls .mobile-btn').forEach(btn => {
     if (k) { 
       keys[k] = true; 
       btn.classList.add('active');
-      if (k === 'jump') tryDoubleJump();
+      if (k === 'jump') doJump();
     }
     if (abilityId) activateAbility(abilityId);
   };
@@ -949,8 +995,9 @@ canvas.addEventListener('touchmove', e => {
     if (dx > 0) { keys['right'] = true; keys['left'] = false; }
     else { keys['left'] = true; keys['right'] = false; }
   }
+  // СВАЙП ВВЕРХ = ПРЫЖОК
   if (dy < -30 && Math.abs(dy) > Math.abs(dx)) {
-    tryDoubleJump();
+    doJump();
     swipeActive = false;
   }
 }, { passive: false });
@@ -961,7 +1008,6 @@ canvas.addEventListener('touchend', e => {
 document.addEventListener('gesturestart', e => e.preventDefault());
 function vibrate(ms) { if (navigator.vibrate) navigator.vibrate(ms); }
 
-// ============ PHYSICS ============
 function rectOverlap(a, b) {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 }
@@ -1104,7 +1150,7 @@ function showDeathModal() {
       <h2>💀 Упс!</h2>
       <p>Ты погиб. Попробуешь ещё раз?</p>
       <div class="modal-buttons">
-        <button class="btn" id="retryBtn">🔄 Заново</button>
+        <button class="btn" id="retryBtn"> Заново</button>
         <button class="btn coin" id="continueBtn" ${canContinue ? '' : 'disabled'}>💎 Продолжить за 5💰</button>
         <button class="btn secondary" id="backBtn">← К уровням</button>
       </div>
@@ -1147,7 +1193,6 @@ function showWinModal(stars, earned) {
   modal.querySelector('#backBtn').onclick = () => { modal.remove(); showScreen('levelSelect'); };
 }
 
-// ============ PARTICLES ============
 function spawnParticles(x, y, count, color) {
   for (let i = 0; i < count; i++) {
     game.particles.push({ x, y, vx: (Math.random() - 0.5) * 6, vy: (Math.random() - 0.5) * 6 - 2, life: 30, color, size: Math.random() * 4 + 2 });
@@ -1182,7 +1227,6 @@ function updateMoving() {
   }
 }
 
-// ============ RENDER ============
 function drawBackground() {
   let bgData;
   if (progress.selectedBg !== 'default') bgData = getCurrentBg();
@@ -1362,9 +1406,7 @@ function drawCoin(c) {
 
 function drawEnemy(e) {
   if (e.dead) return;
-  if (game.player.invisible) {
-    ctx.globalAlpha = 0.3;
-  }
+  if (game.player.invisible) ctx.globalAlpha = 0.3;
   ctx.save(); ctx.translate(e.x + e.w/2, e.y + e.h/2);
   ctx.fillStyle = '#ee5a6f'; ctx.beginPath(); ctx.arc(0, 0, e.w/2, 0, Math.PI * 2); ctx.fill();
   ctx.fillStyle = 'white'; ctx.beginPath(); ctx.arc(-5, -3, 4, 0, Math.PI * 2); ctx.arc(5, -3, 4, 0, Math.PI * 2); ctx.fill();
@@ -1403,9 +1445,7 @@ function drawPlayer() {
 
   ctx.save(); ctx.translate(p.x + p.w/2, p.y + p.h/2); ctx.scale(p.facing, 1);
 
-  if (p.invisible) {
-    ctx.globalAlpha = 0.3;
-  }
+  if (p.invisible) ctx.globalAlpha = 0.3;
 
   if (p.shielded && game.abilities.shield.active > 0) {
     ctx.strokeStyle = 'rgba(72,219,251,0.8)'; ctx.lineWidth = 3;
@@ -1415,7 +1455,7 @@ function drawPlayer() {
   ctx.fillStyle = 'rgba(0,0,0,0.2)';
   ctx.beginPath(); ctx.ellipse(0, p.h/2 + 2, p.w/2, 4, 0, 0, Math.PI * 2); ctx.fill();
 
-  let bodyColor = c.body; let bellyColor = c.belly; let legsColor = c.legs;
+  let bodyColor = c.body; let legsColor = c.legs;
 
   if (c.special === 'rainbow') {
     const grad = ctx.createLinearGradient(-p.w/2, -p.h/2, p.w/2, p.h/2);
@@ -1428,7 +1468,7 @@ function drawPlayer() {
   }
 
   ctx.fillStyle = bodyColor; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-  ctx.fillStyle = bellyColor; ctx.fillRect(-p.w/2 + 5, 0, p.w - 10, p.h/2 - 5);
+  ctx.fillStyle = c.belly; ctx.fillRect(-p.w/2 + 5, 0, p.w - 10, p.h/2 - 5);
   ctx.fillStyle = 'white'; ctx.fillRect(2, -p.h/2 + 8, 10, 10);
   ctx.fillStyle = c.eye; ctx.fillRect(6, -p.h/2 + 11, 4, 5);
   ctx.fillStyle = legsColor;
@@ -1468,7 +1508,6 @@ function render() {
   ctx.restore();
 }
 
-// ============ LOOP ============
 let gameLoopRunning = false;
 let lastTime = 0;
 function loop(ts) {
@@ -1488,7 +1527,6 @@ function loop(ts) {
   requestAnimationFrame(loop);
 }
 
-// ============ RESIZE ============
 function resizeCanvas() {
   canvas.width = GAME_W; canvas.height = GAME_H;
   const app = document.getElementById('app');
@@ -1503,7 +1541,6 @@ window.addEventListener('resize', resizeCanvas);
 window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 200));
 resizeCanvas();
 
-// ============ LEVEL SELECT ============
 function renderLevelSelect() {
   updateBalanceDisplays();
   const grid = document.getElementById('levelsGrid');
@@ -1565,7 +1602,6 @@ function renderLevelSelect() {
   });
 }
 
-// ============ SHOP ============
 function switchShopTab(tab) {
   currentShopTab = tab;
   document.querySelectorAll('.shop-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
@@ -1589,11 +1625,11 @@ function renderShop() {
       let statusHTML = '';
       if (selected) statusHTML = '<div class="skin-status selected">✓ Выбран</div>';
       else if (owned) statusHTML = '<div class="skin-status owned">Куплен</div>';
-      else if (!canAfford) statusHTML = '<div class="skin-status locked"></div>';
+      else if (!canAfford) statusHTML = '<div class="skin-status locked">🔒</div>';
 
       const priceHTML = owned
         ? (selected ? '<div class="skin-price" style="color:#26de81">✓ Активен</div>' : '<div class="skin-price" style="color:#48dbfb">Нажми чтобы выбрать</div>')
-        : `<div class="skin-price">💰 ${skin.price}</div>`;
+        : `<div class="skin-price"> ${skin.price}</div>`;
 
       card.innerHTML = `
         ${statusHTML}
@@ -1762,7 +1798,6 @@ function resetProgress() {
   }
 }
 
-// ============ WHEEL OF FORTUNE ============
 const WHEEL_SEGMENTS = [
   { label: 'Ничего', type: 'nothing', color: '#576574', textColor: '#fff' },
   { label: 'Ничего', type: 'nothing', color: '#576574', textColor: '#fff' },
@@ -1779,7 +1814,7 @@ const WHEEL_SEGMENTS = [
   { label: 'Ничего', type: 'nothing', color: '#576574', textColor: '#fff' },
   { label: 'Скин', type: 'skin', color: '#ff6b6b', textColor: '#fff' },
   { label: 'Ничего', type: 'nothing', color: '#576574', textColor: '#fff' },
-  { label: '200', type: 'coins', value: 200, color: '#feca57', textColor: '#000' },
+  { label: '200💰', type: 'coins', value: 200, color: '#feca57', textColor: '#000' },
 ];
 
 let wheelCanvas, wheelCtx;
@@ -1789,7 +1824,7 @@ let wheelSpinning = false;
 function openWheel() {
   if (wheelSpinning) return;
   if (progress.totalCoins < 50) {
-    showToast('Нужно 50 для вращения!', 'error');
+    showToast('Нужно 50💰 для вращения!', 'error');
     vibrate(100);
     return;
   }
@@ -1807,7 +1842,7 @@ function openWheel() {
       </div>
       <div class="wheel-result" id="wheelResult"></div>
       <div class="modal-buttons">
-        <button class="btn wheel" id="spinBtn"> КРУТИТЬ (50💰)</button>
+        <button class="btn wheel" id="spinBtn">🎯 КРУТИТЬ (50)</button>
         <button class="btn secondary" id="closeWheelBtn">Закрыть</button>
       </div>
     </div>
@@ -1913,7 +1948,7 @@ function spinWheel() {
       progress.totalCoins += prize.value;
       saveProgress();
       updateBalanceDisplays();
-      resultEl.textContent = `🎉 Выигрыш: ${prize.label}!`;
+      resultEl.textContent = ` Выигрыш: ${prize.label}!`;
       resultEl.className = 'wheel-result win';
       showToast(`Выиграно ${prize.value} монет!`, 'success');
       vibrate([100, 50, 100, 50, 200]);
@@ -1935,24 +1970,6 @@ function spinWheel() {
         resultEl.textContent = 'Все скины есть! +100💰';
         resultEl.className = 'wheel-result win';
       }
-    } else if (prize.type === 'bg') {
-      const unowned = BACKGROUNDS.filter(b => !progress.ownedBgs.includes(b.id));
-      if (unowned.length > 0) {
-        const won = unowned[Math.floor(Math.random() * unowned.length)];
-        progress.ownedBgs.push(won.id);
-        progress.selectedBg = won.id;
-        saveProgress();
-        resultEl.textContent = `🌄 Фон "${won.name}"!`;
-        resultEl.className = 'wheel-result win';
-        showToast(`Выигран фон "${won.name}"!`, 'success');
-        vibrate([100, 50, 100, 50, 200]);
-      } else {
-        progress.totalCoins += 100;
-        saveProgress();
-        updateBalanceDisplays();
-        resultEl.textContent = 'Все фоны есть! +100';
-        resultEl.className = 'wheel-result win';
-      }
     } else {
       resultEl.textContent = '😔 Ничего...';
       resultEl.className = 'wheel-result lose';
@@ -1970,4 +1987,3 @@ renderLevelSelect();
 </body>
 </html>
 ```
-
