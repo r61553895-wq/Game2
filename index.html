@@ -327,13 +327,73 @@
   .wheel-result.win { color: #26de81; animation: winPulse 0.6s ease-in-out 3; }
   .wheel-result.lose { color: #ff6b6b; }
   @keyframes winPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+  /* Инструкция по настройке */
+  .setup-instruction {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    border-radius: 20px;
+    border: 3px solid #feca57;
+    color: white;
+  }
+  .setup-instruction h2 {
+    color: #feca57;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+  .setup-instruction h3 {
+    color: #48dbfb;
+    margin: 1rem 0 0.5rem;
+    font-size: 1.3rem;
+  }
+  .setup-instruction ol, .setup-instruction ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .setup-instruction li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+  .setup-instruction code {
+    background: rgba(0,0,0,0.5);
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    font-family: monospace;
+    color: #feca57;
+  }
+  .setup-instruction .code-block {
+    background: rgba(0,0,0,0.7);
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-family: monospace;
+    white-space: pre-wrap;
+    border: 2px solid #48dbfb;
+  }
+  .setup-instruction .warning {
+    background: rgba(255,107,107,0.2);
+    border-left: 4px solid #ff6b6b;
+    padding: 0.8rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+  }
+  .setup-instruction .success {
+    background: rgba(38,222,129,0.2);
+    border-left: 4px solid #26de81;
+    padding: 0.8rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+  }
 </style>
 </head>
 <body>
 <div id="app">
 
   <div id="menu" class="screen">
-    <div class="stats-display" id="statsDisplay">👥 <span id="onlineCount">—</span> онлайн | 👁️ <span id="visitorCount">—</span> всего</div>
+    <div class="stats-display" id="statsDisplay"> <span id="onlineCount">—</span> онлайн | 👁️ <span id="visitorCount">—</span> всего</div>
     <div class="balance-display">💰 <span id="menuBalance">0</span></div>
     <h1 class="title">ПРЫГ-СКОК</h1>
     <p class="subtitle">✨ Большое приключение ✨</p>
@@ -393,19 +453,20 @@
 
 <div id="toast"></div>
 
-<!-- FIREBASE MODULE -->
+<!-- FIREBASE MODULE - СЧИТАЕТ ОНЛАЙН -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { getDatabase, ref, set, onValue, onDisconnect, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
+// ⚠️ ВАЖНО: добавлен databaseURL (его не было в твоём конфиге, но он нужен для Realtime Database)
 const firebaseConfig = {
-  apiKey: "AIzaSyCkdKg9fDtCyQLuYyCJr1aAzu3rhPBKzQw",
-  authDomain: "sjsnn-88243.firebaseapp.com",
-  databaseURL: "https://sjsnn-88243-default-rtdb.firebaseio.com",
-  projectId: "sjsnn-88243",
-  storageBucket: "sjsnn-88243.firebasestorage.app",
-  messagingSenderId: "712414175280",
-  appId: "1:712414175280:web:85ca86b3ef7df1439e8df5"
+  apiKey: "AIzaSyB8bnt0qt-WNXy370uXfPHovtanLWtijkQ",
+  authDomain: "jump-jump-76abe.firebaseapp.com",
+  databaseURL: "https://jump-jump-76abe-default-rtdb.firebaseio.com",
+  projectId: "jump-jump-76abe",
+  storageBucket: "jump-jump-76abe.firebasestorage.app",
+  messagingSenderId: "362335058898",
+  appId: "1:362335058898:web:547581de871224ada5a60b"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -535,10 +596,10 @@ function getCurrentBg() { return BACKGROUNDS.find(b => b.id === progress.selecte
 const ABILITIES = {
   dash: { id: 'dash', name: 'Рывок', icon: '⚡', key: 'E', color: '#feca57', price: 20, desc: 'Мощный рывок вперёд', cooldown: 180, duration: 12, dashSpeed: 22 },
   shield: { id: 'shield', name: 'Щит', icon: '🛡️', key: 'Q', color: '#48dbfb', price: 35, desc: 'Защита от одного удара', cooldown: 900, duration: 600 },
-  magnet: { id: 'magnet', name: 'Магнит', icon: '🧲', key: 'F', color: '#ff6b6b', price: 30, desc: 'Притягивает монеты', cooldown: 600, duration: 300, radius: 180 },
+  magnet: { id: 'magnet', name: 'Магнит', icon: '', key: 'F', color: '#ff6b6b', price: 30, desc: 'Притягивает монеты', cooldown: 600, duration: 300, radius: 180 },
   doubleJump: { id: 'doubleJump', name: 'Двойной прыжок', icon: '🦘', key: 'Shift', color: '#26de81', price: 25, desc: 'Прыжок в воздухе', cooldown: 0, passive: true },
   slowMo: { id: 'slowMo', name: 'Замедление', icon: '⏳', key: 'Z', color: '#a55eea', price: 40, desc: 'Замедляет время на 5 сек', cooldown: 600, duration: 300 },
-  teleport: { id: 'teleport', name: 'Телепорт', icon: '🌀', key: 'X', color: '#ff9ff3', price: 45, desc: 'Мгновенный прыжок вперёд', cooldown: 480, duration: 1, teleportDist: 200 },
+  teleport: { id: 'teleport', name: 'Телепорт', icon: '', key: 'X', color: '#ff9ff3', price: 45, desc: 'Мгновенный прыжок вперёд', cooldown: 480, duration: 1, teleportDist: 200 },
   invisibility: { id: 'invisibility', name: 'Невидимость', icon: '👻', key: 'C', color: '#dfe6e9', price: 50, desc: 'Враги не видят тебя 4 сек', cooldown: 720, duration: 240 }
 };
 
@@ -767,7 +828,6 @@ function renderMobileAbilities() {
     btn.textContent = cfg.icon;
     container.appendChild(btn);
   });
-  // КНОПКА ПРЫЖКА С ИКОНКОЙ
   const jumpBtn = document.createElement('button');
   jumpBtn.className = 'mobile-btn';
   jumpBtn.dataset.key = 'jump';
@@ -782,7 +842,6 @@ function renderMobileAbilities() {
       if (k) { 
         keys[k] = true; 
         btn.classList.add('active');
-        // ПРЫЖОК ПО НАЖАТИЮ КНОПКИ
         if (k === 'jump') doJump();
       }
       if (abilityId) activateAbility(abilityId);
@@ -839,7 +898,7 @@ function activateAbility(id) {
   } else if (id === 'shield') {
     ab.active = cfg.duration;
     game.player.shielded = true;
-    spawnAbilityNotice('️ ЩИТ!', cfg.color);
+    spawnAbilityNotice('🛡️ ЩИТ!', cfg.color);
     vibrate(50);
   } else if (id === 'magnet') {
     ab.active = cfg.duration;
@@ -860,7 +919,7 @@ function activateAbility(id) {
   } else if (id === 'invisibility') {
     ab.active = cfg.duration;
     game.player.invisible = true;
-    spawnAbilityNotice(' НЕВИДИМОСТЬ!', cfg.color);
+    spawnAbilityNotice('👻 НЕВИДИМОСТЬ!', cfg.color);
     vibrate(50);
   }
   
@@ -913,12 +972,10 @@ function updateAbilities() {
   }
 }
 
-// ============ ПРЫЖОК (ИСПРАВЛЕН) ============
 function doJump() {
   if (!game || game.paused || game.won || game.dead) return;
   const p = game.player;
   
-  // Обычный прыжок с земли
   if (p.onGround) {
     p.vy = -13;
     p.onGround = false;
@@ -927,7 +984,6 @@ function doJump() {
     return;
   }
   
-  // Двойной прыжок в воздухе (если куплен)
   if (progress.ownedAbilities.includes('doubleJump') && !game.abilities.doubleJumpUsed) {
     p.vy = -12;
     game.abilities.doubleJumpUsed = true;
@@ -948,7 +1004,6 @@ window.addEventListener('keydown', e => {
   if (k === 'z' && progress.ownedAbilities.includes('slowMo')) activateAbility('slowMo');
   if (k === 'x' && progress.ownedAbilities.includes('teleport')) activateAbility('teleport');
   if (k === 'c' && progress.ownedAbilities.includes('invisibility')) activateAbility('invisibility');
-  // ПРЫЖОК НА ПРОБЕЛ/СТРЕЛКУ ВВЕРХ
   if ((k === ' ' || k === 'arrowup' || k === 'w') && game && !game.paused && !game.won && !game.dead) {
     doJump();
   }
@@ -995,7 +1050,6 @@ canvas.addEventListener('touchmove', e => {
     if (dx > 0) { keys['right'] = true; keys['left'] = false; }
     else { keys['left'] = true; keys['right'] = false; }
   }
-  // СВАЙП ВВЕРХ = ПРЫЖОК
   if (dy < -30 && Math.abs(dy) > Math.abs(dx)) {
     doJump();
     swipeActive = false;
@@ -1150,7 +1204,7 @@ function showDeathModal() {
       <h2>💀 Упс!</h2>
       <p>Ты погиб. Попробуешь ещё раз?</p>
       <div class="modal-buttons">
-        <button class="btn" id="retryBtn"> Заново</button>
+        <button class="btn" id="retryBtn">🔄 Заново</button>
         <button class="btn coin" id="continueBtn" ${canContinue ? '' : 'disabled'}>💎 Продолжить за 5💰</button>
         <button class="btn secondary" id="backBtn">← К уровням</button>
       </div>
@@ -1596,7 +1650,7 @@ function renderLevelSelect() {
       card.innerHTML += `<div class="level-num">${num}</div><div class="level-name">${lv.name}</div><div class="level-stars">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>`;
       card.onclick = () => startLevel(num);
     } else {
-      card.innerHTML = `<div class="lock-icon">🔒</div><div class="level-name">${lv.name}</div>`;
+      card.innerHTML = `<div class="lock-icon"></div><div class="level-name">${lv.name}</div>`;
     }
     grid.appendChild(card);
   });
@@ -1629,7 +1683,7 @@ function renderShop() {
 
       const priceHTML = owned
         ? (selected ? '<div class="skin-price" style="color:#26de81">✓ Активен</div>' : '<div class="skin-price" style="color:#48dbfb">Нажми чтобы выбрать</div>')
-        : `<div class="skin-price"> ${skin.price}</div>`;
+        : `<div class="skin-price">💰 ${skin.price}</div>`;
 
       card.innerHTML = `
         ${statusHTML}
@@ -1657,7 +1711,7 @@ function renderShop() {
       let statusHTML = '';
       if (selected) statusHTML = '<div class="bg-status selected">✓ Выбран</div>';
       else if (owned) statusHTML = '<div class="bg-status owned">Куплен</div>';
-      else if (!canAfford) statusHTML = '<div class="bg-status locked">🔒</div>';
+      else if (!canAfford) statusHTML = '<div class="bg-status locked"></div>';
 
       const priceHTML = owned
         ? (selected ? '<div class="bg-price" style="color:#26de81">✓ Активен</div>' : '<div class="bg-price" style="color:#48dbfb">Нажми чтобы выбрать</div>')
@@ -1688,11 +1742,11 @@ function renderShop() {
 
       let statusHTML = '';
       if (owned) statusHTML = '<div class="ability-status owned">✓ Куплено</div>';
-      else if (!canAfford) statusHTML = '<div class="ability-status locked"></div>';
+      else if (!canAfford) statusHTML = '<div class="ability-status locked">🔒</div>';
 
       const priceHTML = owned
         ? '<div class="ability-price" style="color:#26de81">✓ Активна</div>'
-        : `<div class="ability-price">💰 ${cfg.price}</div>`;
+        : `<div class="ability-price"> ${cfg.price}</div>`;
 
       card.innerHTML = `
         ${statusHTML}
@@ -1834,7 +1888,7 @@ function openWheel() {
   modal.id = 'wheelModal';
   modal.innerHTML = `
     <div class="wheel-container">
-      <h2>🎡 Колесо Фортуны</h2>
+      <h2> Колесо Фортуны</h2>
       <div class="wheel-price">Стоимость: 50 💰</div>
       <div class="wheel-wrapper">
         <div class="wheel-pointer"></div>
@@ -1842,7 +1896,7 @@ function openWheel() {
       </div>
       <div class="wheel-result" id="wheelResult"></div>
       <div class="modal-buttons">
-        <button class="btn wheel" id="spinBtn">🎯 КРУТИТЬ (50)</button>
+        <button class="btn wheel" id="spinBtn">🎯 КРУТИТЬ (50💰)</button>
         <button class="btn secondary" id="closeWheelBtn">Закрыть</button>
       </div>
     </div>
@@ -1948,7 +2002,7 @@ function spinWheel() {
       progress.totalCoins += prize.value;
       saveProgress();
       updateBalanceDisplays();
-      resultEl.textContent = ` Выигрыш: ${prize.label}!`;
+      resultEl.textContent = `🎉 Выигрыш: ${prize.label}!`;
       resultEl.className = 'wheel-result win';
       showToast(`Выиграно ${prize.value} монет!`, 'success');
       vibrate([100, 50, 100, 50, 200]);
@@ -1984,6 +2038,83 @@ updateBalanceDisplays();
 updateCounters();
 renderLevelSelect();
 </script>
+
+<!-- ИНСТРУКЦИЯ ПО НАСТРОЙКЕ FIREBASE -->
+<div class="setup-instruction">
+  <h2>🔥 Инструкция по настройке Firebase</h2>
+  
+  <h3>⚠️ Шаг 1: Создай Realtime Database</h3>
+  <ol>
+    <li>Зайди в <a href="https://console.firebase.google.com/project/jump-jump-76abe" target="_blank" style="color:#feca57;">Firebase Console</a></li>
+    <li>В меню слева нажми <strong>"Realtime Database"</strong></li>
+    <li>Нажми <strong>"Create Database"</strong> (Создать базу данных)</li>
+    <li>Выбери локацию (любую, например United States)</li>
+    <li>Выбери <strong>"Start in test mode"</strong> (Начать в тестовом режиме)</li>
+    <li>Нажми <strong>"Enable"</strong></li>
+  </ol>
+
+  <div class="warning">
+    <strong>️ ВАЖНО:</strong> Если ты уже создал базу данных, но онлайн не работает — проверь правила (Rules) ниже!
+  </div>
+
+  <h3>📋 Шаг 2: Настрой правила (Rules)</h3>
+  <p>В Firebase Console → Realtime Database → вкладка <strong>"Rules"</strong> вставь этот код:</p>
+  
+  <div class="code-block">{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}</div>
+
+  <p>Нажми кнопку <strong>"Publish"</strong> (Опубликовать) справа сверху.</p>
+
+  <div class="success">
+    <strong>✅ Готово!</strong> Теперь онлайн счётчик будет работать. Открой игру в новой вкладке — увидишь "1 онлайн". Открой ещё одну вкладку — увидишь "2 онлайн".
+  </div>
+
+  <h3>🔍 Как проверить что всё работает:</h3>
+  <ol>
+    <li>Открой игру в браузере</li>
+    <li>В левом верхнем углу увидишь: <code>👥 1 онлайн | 👁️ 1 всего</code></li>
+    <li>Открой игру в другой вкладке или на телефоне</li>
+    <li>Увидишь: <code>👥 2 онлайн | 👁️ 2 всего</code></li>
+    <li>Закрой одну вкладку — через 5 минут счётчик уменьшится</li>
+  </ol>
+
+  <h3>🛡️ Шаг 3 (опционально): Безопасные правила</h3>
+  <p>Когда всё работает, можешь сделать правила более безопасными:</p>
+  
+  <div class="code-block">{
+  "rules": {
+    "status": {
+      "$uid": {
+        ".read": true,
+        ".write": "$uid === auth.uid || !data.exists()"
+      }
+    },
+    "stats": {
+      ".read": true,
+      "totalVisitors": {
+        ".write": true
+      }
+    }
+  }
+}</div>
+
+  <h3>❓ Если не работает:</h3>
+  <ul>
+    <li>Проверь что <code>databaseURL</code> правильный: <code>https://jump-jump-76abe-default-rtdb.firebaseio.com</code></li>
+    <li>Открой консоль браузера (F12) — там будет ошибка если что-то не так</li>
+    <li>Убедись что Realtime Database создан (не Firestore!)</li>
+    <li>Проверь что правила опубликованы</li>
+  </ul>
+
+  <div class="success">
+    <strong> Приятной игры!</strong> Теперь ты видишь реальных игроков онлайн!
+  </div>
+</div>
+
 </body>
 </html>
 ```
